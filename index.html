@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#09090B">
+<title>灵镜 / Magic Mirror — eight divinations, one mirror</title>
+<meta name="description" content="Eight classical divination systems — 八字, 紫微, 塔罗, 易经, 星座, 梅花, 奇门, 黄历 — paired with an optional AI interpreter. All engines run on your device. No account, no tracking, no servers.">
+<meta property="og:title" content="灵镜 / Magic Mirror — eight divinations, one mirror">
+<meta property="og:description" content="Eight classical divination systems in your pocket. 八字. 紫微. 塔罗. 易经. 星座. 梅花. 奇门. 黄历. All engines run on your device. No account, no tracking, no servers.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/icon-180.png">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="alternate" hreflang="en" href="/">
+<link rel="alternate" hreflang="zh-Hans" href="/">
+<style>
+/* === Brand tokens === */
+:root {
+  --bg:       #09090B;
+  --surface:  #18181B;
+  --surface2: #1F1F23;
+  --ink:      #FAFAF9;
+  --ink-dim:  #A1A1AA;
+  --muted:    #3F3F46;
+  --accent:   #F59E0B;
+  --accent-d: #B8770A;
+  --border:   #27272A;
+  --radius-card:   16px;
+  --radius-button: 12px;
+  --radius-chip:   999px;
+  --maxw: 1120px;
+  --gutter: 24px;
+  --section-y: 96px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, "Inter", system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
+  --font-zh: "Source Han Serif SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; }
+h1 { font-size: clamp(36px, 7vw, 64px); line-height: 1.05; margin: 0 0 16px; }
+h2 { font-size: clamp(28px, 4.5vw, 40px); line-height: 1.15; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
+p  { margin: 0 0 16px; color: var(--ink-dim); }
+.lead { font-size: clamp(17px, 2.4vw, 20px); color: var(--ink-dim); }
+.eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+section { padding: var(--section-y) 0; border-top: 1px solid var(--border); }
+section:first-of-type { border-top: 0; }
+
+/* === Navigation === */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 600; }
+.brand:hover { text-decoration: none; }
+.brand-mark { width: 28px; height: 28px; }
+.brand-zh { font-family: var(--font-zh); }
+.nav-links { display: none; gap: 24px; align-items: center; }
+.nav-links a { color: var(--ink-dim); font-size: 14px; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+@media (min-width: 720px) { .nav-links { display: flex; } }
+
+/* === Buttons === */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: var(--radius-button);
+  font-weight: 600; font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-primary { background: var(--accent); color: #1C1207; }
+.btn-primary:hover { background: #F7B33A; text-decoration: none; }
+.btn-ghost   { background: transparent; color: var(--ink); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+/* === Hero === */
+.hero {
+  padding: 64px 0 96px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .hero-grid { grid-template-columns: 1.1fr 0.9fr; gap: 64px; }
+}
+.hero h1 .accent { color: var(--accent); }
+.hero .zh { font-family: var(--font-zh); }
+.hero-mark {
+  width: clamp(160px, 28vw, 240px);
+  margin-bottom: 28px;
+  filter: drop-shadow(0 0 60px rgba(245, 158, 11, 0.25));
+}
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.hero-bullets { list-style: none; padding: 0; margin: 24px 0 0; color: var(--ink-dim); font-size: 14px; }
+.hero-bullets li { padding: 6px 0; }
+.hero-bullets li::before { content: "— "; color: var(--accent); }
+
+.hero-shot {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  background: var(--surface);
+}
+.hero-shot img { display: block; width: 100%; }
+
+/* === Modules grid === */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+.module-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.module-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.module-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.module-icon svg { width: 32px; height: 32px; }
+.module-name { color: var(--ink); font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+.module-zh   { font-family: var(--font-zh); color: var(--ink-dim); font-size: 14px; margin: 0 0 8px; }
+.module-desc { color: var(--ink-dim); font-size: 14px; margin: 0; line-height: 1.5; }
+
+/* === AI section === */
+.ai-grid {
+  display: grid; gap: 32px;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 800px) { .ai-grid { grid-template-columns: 1fr 1fr; } }
+.chat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre-wrap;
+  min-height: 200px;
+}
+.chat-card .user { color: var(--accent); }
+.chat-card .assistant { color: var(--ink); }
+.chat-card .meta { color: var(--ink-dim); font-size: 12px; }
+
+/* === Pricing === */
+.pricing-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: 1fr;
+  margin-top: 32px;
+}
+@media (min-width: 760px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+.price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  position: relative;
+}
+.price-card.featured { border-color: var(--accent); }
+.price-card.featured::before {
+  content: "Best value";
+  position: absolute; top: -10px; left: 24px;
+  background: var(--accent); color: #1C1207;
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: var(--radius-chip);
+  letter-spacing: 0.04em;
+}
+.price-name { font-size: 14px; color: var(--ink-dim); margin: 0 0 8px; }
+.price-amt  { font-size: 36px; font-weight: 600; color: var(--ink); margin: 0 0 4px; letter-spacing: -0.02em; }
+.price-amt .unit { font-size: 14px; color: var(--ink-dim); font-weight: 400; margin-left: 4px; }
+.price-desc { font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; }
+.price-features { list-style: none; padding: 0; margin: 0 0 24px; font-size: 14px; }
+.price-features li { color: var(--ink-dim); padding: 4px 0; }
+.price-features li::before { content: "✓ "; color: var(--accent); margin-right: 4px; }
+.price-card .btn { width: 100%; }
+
+/* === Trust / privacy === */
+.trust-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: 1fr;
+  margin-top: 32px;
+}
+@media (min-width: 760px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
+.trust-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+.trust-item .eyebrow { display: block; margin-bottom: 8px; }
+.trust-item h3 { color: var(--ink); margin: 0 0 6px; }
+.trust-item p  { color: var(--ink-dim); font-size: 14px; margin: 0; }
+
+/* === Footer === */
+.foot {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  color: var(--ink-dim);
+  font-size: 13px;
+}
+.foot-inner {
+  display: flex; flex-direction: column; gap: 16px;
+  align-items: flex-start;
+}
+@media (min-width: 720px) {
+  .foot-inner { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.foot-links a { color: var(--ink-dim); }
+.foot-links a:hover { color: var(--ink); text-decoration: none; }
+
+/* === Language switcher === */
+.lang-switch { display: flex; gap: 4px; align-items: center; }
+.lang-switch button {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--ink-dim); padding: 4px 10px;
+  border-radius: var(--radius-chip);
+  font-size: 12px; cursor: pointer;
+  font-family: var(--font-sans);
+}
+.lang-switch button.active { color: var(--accent); border-color: var(--accent); }
+
+/* === Splash pad === */
+.splash {
+  display: grid; place-items: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 24px;
+}
+.splash-mark { width: clamp(120px, 24vw, 200px); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F59E0B"/>
+        <circle cx="50" cy="32" r="3" fill="#FAFAF9"/>
+      </svg>
+      <span><span class="brand-zh">灵镜</span> &nbsp;Magic Mirror</span>
+    </a>
+    <div class="nav-links">
+      <a href="#modules">Modules</a>
+      <a href="#ai">AI</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#privacy">Privacy</a>
+      <a class="btn btn-primary" href="#download" style="padding: 8px 14px; font-size: 14px;">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F59E0B"/>
+        <circle cx="50" cy="32" r="3" fill="#FAFAF9"/>
+      </svg>
+      <h1>
+        <span class="zh">八门术数</span>,<br>
+        <span class="accent">one mirror.</span>
+      </h1>
+      <p class="lead">
+        Eight classical divination systems in your pocket &mdash;
+        八字, 紫微, 塔罗, 易经, 星座, 梅花, 奇门, 黄历 &mdash;
+        paired with an optional AI interpreter.
+      </p>
+      <ul class="hero-bullets">
+        <li>All engines run on your device</li>
+        <li>No account, no sign-up, no email</li>
+        <li>No analytics, no ads, no tracking</li>
+        <li>3 free divinations, no time limit</li>
+      </ul>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#download">Download for iPhone</a>
+        <a class="btn btn-ghost" href="#modules">See all 8 modules</a>
+      </div>
+    </div>
+    <div>
+      <div class="hero-shot">
+        <img src="/AppStore/screenshots/6.7/01_screen.png"
+             alt="灵镜 app — Mirror home screen with quick-start chips" loading="eager">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Modules ===== -->
+<section id="modules">
+  <div class="container">
+    <span class="eyebrow">Eight systems, one app</span>
+    <h2>Every divination, in one place.</h2>
+    <p>Classical Chinese metaphysics meets Western astrology and Tarot &mdash; all in a single iPhone app, all running locally on your device.</p>
+    <div class="modules-grid">
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.39 8.42 21 9.27 16 13.97 17.18 21 12 17.27 6.82 21 8 13.97 3 9.27 9.61 8.42z"/></svg>
+        </div>
+        <h3 class="module-name">Bazi</h3>
+        <p class="module-zh">八字 · Four Pillars</p>
+        <p class="module-desc">Your birth chart of year, month, day, hour &mdash; with day-master element, hidden stems, and the ten-gods map.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        </div>
+        <h3 class="module-name">Zi Wei</h3>
+        <p class="module-zh">紫微斗数</p>
+        <p class="module-desc">The imperial star chart: 14 main stars across 12 palaces, with the four transformations (四化).</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 7v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7z"/></svg>
+        </div>
+        <h3 class="module-name">Tarot</h3>
+        <p class="module-zh">塔罗</p>
+        <p class="module-desc">78-card Rider&ndash;Waite&ndash;Smith deck. Three spreads: single card, three cards, and the Celtic cross.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 2 7l10 5 10-5z M2 17l10 5 10-5 M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="module-name">I Ching</h3>
+        <p class="module-zh">易经</p>
+        <p class="module-desc">Cast by time or by number. The original hexagram, the changed hexagram, and the moving line.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.5 9 22 9.5 16 14.5 18 22 12 18 6 22 8 14.5 2 9.5 9.5 9z"/></svg>
+        </div>
+        <h3 class="module-name">Astrology</h3>
+        <p class="module-zh">西方星座</p>
+        <p class="module-desc">Natal chart with Sun, Moon, Ascendant, the twelve houses, and the major aspects.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z M12 6a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0z"/></svg>
+        </div>
+        <h3 class="module-name">Plum Blossom</h3>
+        <p class="module-zh">梅花易数</p>
+        <p class="module-desc">Numbers into hexagrams. The body-function-mutual-change (体用互变) analysis with moving-line trace.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z"/></svg>
+        </div>
+        <h3 class="module-name">Qi Men</h3>
+        <p class="module-zh">奇门遁甲</p>
+        <p class="module-desc">A 9-palace, 9-star, 8-door plate cast for any moment in time.</p>
+      </div>
+
+      <div class="module-card">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V9h14z"/></svg>
+        </div>
+        <h3 class="module-name">Almanac</h3>
+        <p class="module-zh">黄历</p>
+        <p class="module-desc">Daily 宜忌, 冲煞, 彭祖百忌 &mdash; the classical almanac for any date you choose.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI ===== -->
+<section id="ai">
+  <div class="container">
+    <span class="eyebrow">Optional AI interpreter</span>
+    <h2>Ask the mirror.</h2>
+    <p>Pair any reading with the 灵镜 chat assistant. Bring your own LLM API key (MiniMax, OpenAI, Anthropic, or any compatible endpoint). The key is stored in your iOS Keychain and used only to call the provider directly from your device.</p>
+    <div class="ai-grid" style="margin-top: 40px;">
+      <div class="chat-card">
+<span class="meta">— 灵镜  ·  Bazi engine output</span>
+
+Year pillar:   庚午  (Yang Metal, Horse)
+Month pillar:  癸未  (Yin Water, Goat)
+Day pillar:    甲子  (Yang Wood, Rat)  ← you
+Hour pillar:   丙寅  (Yang Fire, Tiger)
+
+Day master: 甲 (Yang Wood)
+Element:      Wood
+Ten gods:     癸 = 偏印 · 午 = 丁 = 偏官
+Hidden stems: 午(丁己)  未(己丁乙)  子(癸)
+
+Summary: Strong Wood day master in early summer.
+Offensive personality; appreciates structure.
+Career in 2026 favours creative leadership roles.
+
+<span class="user">→  What does this mean for my career in 2026?</span>
+
+<span class="assistant">Your 庚 year (2026) brings the Seven Killings star to
+your day pillar — a year of competitive drive. Combined
+with your strong Wood day master, this is the year to
+take initiative, not wait. Consider roles where you set
+the agenda: leading a project, founding a venture, or
+stepping into a public-facing role.
+
+Avoid: passive roles that require waiting for permission.
+The energy of 庚 will not wait for you.</span>
+      </div>
+      <div>
+        <h3>Bring your own LLM.</h3>
+        <p>灵镜 does not bundle, proxy, or resell any LLM. You provide an API key for the provider you trust; we never see it, log it, or store it. The prompt and the response stay between you and that provider.</p>
+        <p>Supported out of the box:</p>
+        <ul class="hero-bullets" style="margin: 16px 0;">
+          <li>OpenAI (api.openai.com)</li>
+          <li>Anthropic (api.anthropic.com)</li>
+          <li>MiniMax (api.minimaxi.com)</li>
+          <li>Any OpenAI-compatible endpoint</li>
+        </ul>
+        <p>You pay the LLM provider directly. 灵镜 does not mark up or resell LLM access.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Pricing ===== -->
+<section id="pricing">
+  <div class="container">
+    <span class="eyebrow">Pricing</span>
+    <h2>Pay what feels right.</h2>
+    <p>Start with 3 free divinations. No time limit, no card required. Beyond that, choose monthly, annual, or lifetime.</p>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <p class="price-name">Monthly</p>
+        <p class="price-amt">$4.99<span class="unit">/mo</span></p>
+        <p class="price-desc">For casual users. Cancel anytime.</p>
+        <ul class="price-features">
+          <li>Unlimited divinations across all 8 modules</li>
+          <li>Unlimited AI interpretations (BYO LLM key)</li>
+          <li>Cross-device iCloud sync (when signed in)</li>
+          <li>Cancel any time</li>
+        </ul>
+        <a class="btn btn-ghost" href="#download">Start monthly</a>
+      </div>
+
+      <div class="price-card featured">
+        <p class="price-name">Annual</p>
+        <p class="price-amt">$29.99<span class="unit">/yr</span></p>
+        <p class="price-desc">Save 50% vs monthly.</p>
+        <ul class="price-features">
+          <li>Everything in monthly</li>
+          <li>New modules added during the year, free</li>
+          <li>Priority response on support tickets</li>
+          <li>Renews at $29.99 / year</li>
+        </ul>
+        <a class="btn btn-primary" href="#download">Get annual</a>
+      </div>
+
+      <div class="price-card">
+        <p class="price-name">Lifetime</p>
+        <p class="price-amt">$79.99<span class="unit">once</span></p>
+        <p class="price-desc">One payment, yours forever.</p>
+        <ul class="price-features">
+          <li>Everything in annual, forever</li>
+          <li>No subscriptions, no renewals</li>
+          <li>Free updates for the lifetime of the app</li>
+          <li>Future iPad &amp; Mac versions included</li>
+        </ul>
+        <a class="btn btn-ghost" href="#download">Buy lifetime</a>
+      </div>
+
+    </div>
+    <p style="margin-top: 24px; font-size: 14px;">All three tiers include the same features &mdash; the only difference is the billing period. Pricing in your local currency will be shown at checkout.</p>
+  </div>
+</section>
+
+<!-- ===== Trust / Privacy ===== -->
+<section id="privacy">
+  <div class="container">
+    <span class="eyebrow">Privacy by design</span>
+    <h2>Your data stays on your device.</h2>
+    <p>灵镜 collects no data on any server we operate. There is no server. The full data flow is local.</p>
+    <div class="trust-grid">
+
+      <div class="trust-item">
+        <span class="eyebrow">No account</span>
+        <h3>No sign-up. No email.</h3>
+        <p>You install the app and start using it. There is no account, no email verification, no password to forget.</p>
+      </div>
+
+      <div class="trust-item">
+        <span class="eyebrow">No tracking</span>
+        <h3>No analytics. No ads. No third-party SDKs.</h3>
+        <p>灵镜 does not bundle Firebase, Google Analytics, Sentry, Adjust, or any tracking library. There are no ads in the current version.</p>
+      </div>
+
+      <div class="trust-item">
+        <span class="eyebrow">Your LLM, your call</span>
+        <h3>Your API key never leaves your device.</h3>
+        <p>If you configure an LLM API key, it is stored in the iOS Keychain on your device and sent directly to the provider you selected &mdash; not to us.</p>
+      </div>
+
+      <div class="trust-item">
+        <span class="eyebrow">Right to be forgotten</span>
+        <h3>Delete the app. That's it.</h3>
+        <p>Since we have no server, there is no data to delete on our end. Uninstalling the app removes all local data.</p>
+      </div>
+
+    </div>
+    <p style="margin-top: 24px;">
+      <a href="privacy.html">Read the full privacy policy &rarr;</a>
+      &nbsp;·&nbsp;
+      <a href="terms.html">Terms of service &rarr;</a>
+    </p>
+  </div>
+</section>
+
+<!-- ===== Download CTA ===== -->
+<section id="download" style="padding: 80px 0;">
+  <div class="container" style="text-align: center;">
+    <span class="eyebrow">Available now</span>
+    <h2>Try 灵镜 on your iPhone.</h2>
+    <p class="lead" style="max-width: 600px; margin: 0 auto 28px;">3 free divinations, no time limit, no account. iPhone &amp; iPad. iOS 17+.</p>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id-YOURAPPID" style="font-size: 17px; padding: 18px 32px;">
+      Open App Store
+    </a>
+    <p style="margin-top: 24px; font-size: 13px; color: var(--muted);">
+      Or scan this QR code on your phone.
+    </p>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="foot">
+  <div class="container foot-inner">
+    <div>
+      <strong>灵镜 / Magic Mirror</strong> &nbsp;·&nbsp;
+      <span>Built for iPhone. Made in Hong Kong.</span>
+    </div>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing">Source</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing/issues">Support</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

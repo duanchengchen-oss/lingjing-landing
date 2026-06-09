@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#09090B">
+<title>Terms — 灵镜 / Magic Mirror</title>
+<link rel="icon" type="image/png" href="/icon-180.png">
+<style>
+:root {
+  --bg: #09090B; --surface: #18181B; --ink: #FAFAF9; --ink-dim: #A1A1AA;
+  --muted: #3F3F46; --accent: #F59E0B; --border: #27272A;
+  --maxw: 720px; --gutter: 24px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-zh: "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+       font-family: var(--font-sans); font-size: 16px; line-height: 1.7;
+       -webkit-font-smoothing: antialiased; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 48px var(--gutter); }
+h1 { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+h2 { font-size: 20px; font-weight: 600; margin: 32px 0 8px; color: var(--accent); }
+p, li { color: var(--ink-dim); }
+.zh { font-family: var(--font-zh); }
+.meta { color: var(--muted); font-size: 14px; margin: 0 0 32px; }
+a { color: var(--accent); }
+.foot { border-top: 1px solid var(--border); padding: 24px var(--gutter);
+        text-align: center; color: var(--muted); font-size: 13px; }
+.foot a { color: var(--ink-dim); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" style="font-size: 14px;">&larr; back to 灵镜</a>
+  <h1>Terms of Service</h1>
+  <p class="meta">Last updated: 2026-06-10</p>
+
+  <h2>Acceptance</h2>
+  <p>By installing or using <span class="zh">灵镜</span> (Magic Mirror), you agree to these terms. If you do not agree, do not install or use the app.</p>
+
+  <h2>What 灵镜 is</h2>
+  <p>灵镜 is an entertainment, cultural-exploration, and reflection tool that implements eight classical Chinese metaphysical systems: <span class="zh">八字</span>, <span class="zh">紫微</span>, <span class="zh">塔罗</span>, <span class="zh">易经</span>, <span class="zh">西方星座</span>, <span class="zh">梅花易数</span>, <span class="zh">奇门遁甲</span>, <span class="zh">黄历</span>.</p>
+  <p>The app also offers an optional AI chat assistant powered by a third-party LLM (configured by you, paid by you, called directly from your device).</p>
+
+  <h2>What 灵镜 is NOT</h2>
+  <p>灵镜 is <strong>not</strong>:</p>
+  <ul>
+    <li>A substitute for professional medical advice</li>
+    <li>A substitute for professional financial advice</li>
+    <li>A substitute for professional legal advice</li>
+    <li>A substitute for professional psychological counseling</li>
+    <li>A prediction of the future</li>
+    <li>A scientific instrument</li>
+    <li>A religious authority</li>
+  </ul>
+  <p>The <span class="zh">排盘</span> engines are deterministic implementations of classical algorithms. Their outputs are computed artifacts, not factual claims about the world or about you. Treat them as prompts for reflection, not as instructions for action.</p>
+
+  <h2>Your responsibility</h2>
+  <p>You are responsible for:</p>
+  <ul>
+    <li>The accuracy of the birth data and other inputs you provide.</li>
+    <li>Any decisions you make based on the app's outputs.</li>
+    <li>The cost of the LLM API calls you make via the optional AI chat feature (you provide your own API key and pay the LLM provider directly).</li>
+    <li>Compliance with the laws of your jurisdiction. Some jurisdictions restrict fortune-telling services; 灵镜 is offered as cultural software, not as a fortune-telling service.</li>
+  </ul>
+
+  <h2>Subscriptions and purchases</h2>
+  <p>灵镜 offers auto-renewable subscriptions and a one-time lifetime purchase via the iOS App Store. Pricing is displayed in the App Store and may vary by region and currency.</p>
+  <p>Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period. Manage your subscription in <strong>iOS Settings &rarr; Apple ID &rarr; Subscriptions</strong>.</p>
+  <p>We do not have access to your payment information. Apple processes all payments. Refund requests are handled by Apple &mdash; visit <a href="https://reportaproblem.apple.com" rel="noopener">reportaproblem.apple.com</a>.</p>
+
+  <h2>Free tier</h2>
+  <p>灵镜 grants 3 free divinations to new users. The free tier is not time-limited, is per-device, and can be extended indefinitely by watching a reward ad. Any paid subscription or the lifetime purchase fully unlocks the app.</p>
+
+  <h2>LLM API key (optional feature)</h2>
+  <p>If you configure an LLM API key:</p>
+  <ul>
+    <li>The key is stored in the iOS Keychain on your device.</li>
+    <li>It is sent only to the LLM provider you selected, in the <code>Authorization</code> header, over HTTPS.</li>
+    <li>We do not see, log, proxy, or store the key, your prompts, or the LLM's responses.</li>
+    <li>You are responsible for the cost of the LLM API calls.</li>
+    <li>You are responsible for complying with the LLM provider's terms of service.</li>
+  </ul>
+  <p>To remove the key at any time, clear the API Key field in Settings.</p>
+
+  <h2>Intellectual property</h2>
+  <p>灵镜 and all its original content (engines, UI, copy) are &copy; 2026 段成琛 / Chengchen Duan. All rights reserved.</p>
+  <p>The classical systems (<span class="zh">八字, 紫微, 易经, 梅花, 奇门, 黄历</span>) are part of the public cultural heritage of China and are not claimed as original IP. The Tarot module uses the 78-card Rider&ndash;Waite&ndash;Smith deck lineage. The Western Astrology module uses the tropical zodiac system.</p>
+
+  <h2>No warranty</h2>
+  <p>灵镜 is provided "as is" and "as available" without warranty of any kind, express or implied. We do not warrant that the engines are bug-free or that the outputs are correct.</p>
+
+  <h2>Limitation of liability</h2>
+  <p>To the maximum extent permitted by law, we are not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of 灵镜.</p>
+
+  <h2>Termination</h2>
+  <p>We may terminate or suspend access to 灵镜 at any time, with or without notice, for any reason. You may stop using 灵镜 at any time by uninstalling it.</p>
+
+  <h2>Governing law</h2>
+  <p>These terms are governed by the laws of Hong Kong SAR, without regard to its conflict-of-laws rules.</p>
+
+  <h2>Contact</h2>
+  <p>For questions, contact us at the support URL listed in the App Store listing for 灵镜.</p>
+</div>
+<div class="foot">
+  <a href="index.html">灵镜 / Magic Mirror</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a>
+</div>
+</body>
+</html>

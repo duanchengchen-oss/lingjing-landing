@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#09090B">
+<title>Privacy — 灵镜 / Magic Mirror</title>
+<link rel="icon" type="image/png" href="/icon-180.png">
+<style>
+:root {
+  --bg: #09090B; --surface: #18181B; --ink: #FAFAF9; --ink-dim: #A1A1AA;
+  --muted: #3F3F46; --accent: #F59E0B; --border: #27272A;
+  --maxw: 720px; --gutter: 24px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-zh: "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+       font-family: var(--font-sans); font-size: 16px; line-height: 1.7;
+       -webkit-font-smoothing: antialiased; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 48px var(--gutter); }
+h1 { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+h2 { font-size: 20px; font-weight: 600; margin: 32px 0 8px; color: var(--accent); }
+h3 { font-size: 16px; font-weight: 600; margin: 24px 0 4px; }
+p, li { color: var(--ink-dim); }
+.zh { font-family: var(--font-zh); }
+.meta { color: var(--muted); font-size: 14px; margin: 0 0 32px; }
+code { background: var(--surface); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 14px; color: var(--ink); }
+a { color: var(--accent); }
+.foot { border-top: 1px solid var(--border); padding: 24px var(--gutter);
+        text-align: center; color: var(--muted); font-size: 13px; }
+.foot a { color: var(--ink-dim); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" style="font-size: 14px;">&larr; back to 灵镜</a>
+  <h1>Privacy Policy</h1>
+  <p class="meta">Last updated: 2026-06-10</p>
+
+  <h2>What 灵镜 does</h2>
+  <p><span class="zh">灵镜</span> (Magic Mirror) is a Chinese metaphysics and divination app. It offers eight divination modules (<span class="zh">八字, 紫微, 塔罗, 易经, 星座, 梅花, 奇门, 黄历</span>) and an optional AI chat assistant that interprets the results in natural language.</p>
+
+  <h2>Data we collect</h2>
+  <p>灵镜 collects <strong>no data on any server we operate</strong>. The full data flow stays on your device:</p>
+  <ul>
+    <li><strong>Birth date, time, gender, location</strong>: used only locally to compute divination charts (<span class="zh">排盘</span>). Stored in SwiftData on your device. Never sent to our servers (we have none).</li>
+    <li><strong>Saved readings and chat history</strong>: stored in SwiftData on your device. Never sent to our servers.</li>
+    <li><strong>LLM API key (optional)</strong>: if you provide your own MiniMax, OpenAI, Anthropic, or compatible LLM API key to enable the AI chat, it is stored in the iOS Keychain on your device. We never see it. It is used to call the LLM provider <strong>directly from your device</strong> over HTTPS. We do not proxy, log, or store your prompts or responses.</li>
+    <li><strong>Free-tier usage counter</strong>: stored in <code>UserDefaults</code> on your device to track how many free divinations you have used. Resettable in Settings.</li>
+    <li><strong>Subscription status</strong>: stored in the iOS Keychain via StoreKit 2. We do not maintain a server-side subscription database.</li>
+    <li><strong>Diagnostics</strong>: none. 灵镜 does not include any analytics SDK, crash reporter, or tracking library.</li>
+  </ul>
+
+  <h2>Network requests</h2>
+  <p>When you use the AI chat feature, your device makes HTTPS requests <strong>directly to the LLM provider you configured</strong> (e.g. <code>api.minimaxi.com</code>, <code>api.openai.com</code>, <code>api.anthropic.com</code>). We do not see or log these requests. Each LLM provider has its own privacy policy; please review their terms before configuring an API key.</p>
+  <p>The LLM API key is sent in the <code>Authorization</code> header of these requests exactly as you provided it.</p>
+
+  <h2>No third-party SDKs</h2>
+  <p>灵镜 does not bundle Firebase, Google Analytics, Sentry, Adjust, or any other third-party tracking or analytics SDK. There are no ads in the current version.</p>
+
+  <h2>Children</h2>
+  <p>灵镜 is rated 4+ and is not directed at children under 13. We do not knowingly collect any data from children. The app is for entertainment and reflection only &mdash; not for medical, financial, or legal advice.</p>
+
+  <h2>Your rights (GDPR / CCPA / PIPL)</h2>
+  <p>Since we collect no data on our servers, there is no data to export, delete, or modify on our end. To clear all locally-stored data, delete and reinstall the app, or use Settings &rarr; Reset to clear usage history.</p>
+
+  <h2>Required Apple privacy reasons</h2>
+  <p>灵镜 declares the following "Required Reason" API access in its <code>PrivacyInfo.xcprivacy</code>:</p>
+  <ul>
+    <li><code>NSPrivacyAccessedAPICategoryUserDefaults</code> &mdash; reason <code>CA92.1</code> (access info from same app, per documentation). Used to persist the free usage counter and last selected tab.</li>
+    <li><code>NSPrivacyAccessedAPICategoryFileTimestamp</code> &mdash; reason <code>C617.1</code> (display to user). Used to show "last opened" and "cast at" times in History.</li>
+    <li><code>NSPrivacyAccessedAPICategorySystemBootTime</code> &mdash; reason <code>35F9.1</code> (measure time elapsed). Used to time-cast module load.</li>
+    <li><code>NSPrivacyAccessedAPICategoryDiskSpace</code> &mdash; reason <code>E174.1</code> (perform task on user request). Used to display SwiftData store size in Settings &rarr; Storage.</li>
+  </ul>
+
+  <h2>Changes to this policy</h2>
+  <p>We will update this policy if we add or change any data-handling behavior. The "Last updated" date at the top will reflect the change. Material changes will be flagged in the App Store "What's New" section.</p>
+
+  <h2>Contact</h2>
+  <p>For privacy questions, contact us at the support URL listed in the App Store listing for 灵镜.</p>
+
+  <h2>Disclaimer</h2>
+  <p>灵镜 is a tool for entertainment, reflection, and cultural exploration. It is not a substitute for professional medical, financial, legal, or psychological advice. The <span class="zh">排盘</span> engines are deterministic implementations of classical Chinese metaphysical systems; their outputs are not predictions and should not be treated as such.</p>
+</div>
+<div class="foot">
+  <a href="index.html">灵镜 / Magic Mirror</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a>
+</div>
+</body>
+</html>
