@@ -420,9 +420,9 @@ section:first-of-type { border-top: 0; }
 <!-- ===== AI ===== -->
 <section id="ai">
   <div class="container">
-    <span class="eyebrow">Optional AI interpreter</span>
+    <span class="eyebrow">On-device interpreter</span>
     <h2>Ask the mirror.</h2>
-    <p>Pair any reading with the 灵镜 chat assistant. Bring your own LLM API key (MiniMax, OpenAI, Anthropic, or any compatible endpoint). The key is stored in your iOS Keychain and used only to call the provider directly from your device.</p>
+    <p>Pair any reading with the 灵镜 chat assistant. Deep readings are generated on this phone — by Apple&nbsp;Intelligence where the hardware supports it, or by a built-in deterministic interpreter. No API key, no account, no cloud. Your birth data never leaves the device.</p>
     <div class="ai-grid" style="margin-top: 40px;">
       <div class="chat-card">
 <span class="meta">— 灵镜  ·  Bazi engine output</span>
@@ -454,16 +454,14 @@ Avoid: passive roles that require waiting for permission.
 The energy of 庚 will not wait for you.</span>
       </div>
       <div>
-        <h3>Bring your own LLM.</h3>
-        <p>灵镜 does not bundle, proxy, or resell any LLM. You provide an API key for the provider you trust; we never see it, log it, or store it. The prompt and the response stay between you and that provider.</p>
-        <p>Supported out of the box:</p>
+        <h3>It runs on this phone.</h3>
+        <p>灵镜 bundles no cloud AI and opens no network connection — the binary contains no upload path at all. Where the device supports Apple&nbsp;Intelligence, the mirror speaks through the on-device model; everywhere else, a hand-written deterministic interpreter reads the same chart.</p>
         <ul class="hero-bullets" style="margin: 16px 0;">
-          <li>OpenAI (api.openai.com)</li>
-          <li>Anthropic (api.anthropic.com)</li>
-          <li>MiniMax (api.minimaxi.com)</li>
-          <li>Any OpenAI-compatible endpoint</li>
+          <li>No API key, no sign-up, no cloud round-trip</li>
+          <li>Works in airplane mode — try it</li>
+          <li>The same engines the readings use, tool-called mid-chat</li>
         </ul>
-        <p>You pay the LLM provider directly. 灵镜 does not mark up or resell LLM access.</p>
+        <p>What is cast on this phone stays on this phone.</p>
       </div>
     </div>
   </div>
@@ -474,50 +472,47 @@ The energy of 庚 will not wait for you.</span>
   <div class="container">
     <span class="eyebrow">Pricing</span>
     <h2>Pay what feels right.</h2>
-    <p>Your first cast of every instrument is free. No time limit, no card required. Beyond that, choose monthly, annual, or lifetime.</p>
+    <p>The daily practice is free — today’s sign, the almanac, the basic chart. Your first cast of every deeper instrument is free too, with no time limit and no card. Beyond that, three honest ways in:</p>
     <div class="pricing-grid">
 
       <div class="price-card">
-        <p class="price-name">Monthly</p>
-        <p class="price-amt">$4.99<span class="unit">/mo</span></p>
-        <p class="price-desc">For casual users. Cancel anytime.</p>
+        <p class="price-name">Monthly <span class="module-zh" style="display:inline">结缘 · 月</span></p>
+        <p class="price-amt">¥15<span class="unit">/mo</span></p>
+        <p class="price-desc">For a season of questions. Cancel anytime.</p>
         <ul class="price-features">
-          <li>Unlimited divinations across all 8 modules</li>
-          <li>Unlimited AI interpretations (BYO LLM key)</li>
-          <li>Cross-device iCloud sync (when signed in)</li>
-          <li>Cancel any time</li>
+          <li>Unlimited casts across every instrument</li>
+          <li>Full deep readings, on-device</li>
+          <li>The complete 命书 chapters</li>
+          <li>Auto-renews monthly; cancel in Settings</li>
         </ul>
-        <a class="btn btn-ghost" href="#download">Start monthly</a>
       </div>
 
       <div class="price-card featured">
-        <p class="price-name">Annual</p>
-        <p class="price-amt">$29.99<span class="unit">/yr</span></p>
-        <p class="price-desc">Save 50% vs monthly.</p>
+        <p class="price-name">Annual <span class="module-zh" style="display:inline">结缘 · 年</span></p>
+        <p class="price-amt">¥98<span class="unit">/yr</span></p>
+        <p class="price-desc">7-day free trial for eligible new members.</p>
         <ul class="price-features">
           <li>Everything in monthly</li>
-          <li>New modules added during the year, free</li>
-          <li>Priority response on support tickets</li>
-          <li>Renews at $29.99 / year</li>
+          <li>About half the cost of paying monthly</li>
+          <li>Try free for 7 days, cancel before it bills</li>
+          <li>Auto-renews yearly; cancel in Settings</li>
         </ul>
-        <a class="btn btn-primary" href="#download">Get annual</a>
       </div>
 
       <div class="price-card">
-        <p class="price-name">Lifetime</p>
-        <p class="price-amt">$79.99<span class="unit">once</span></p>
-        <p class="price-desc">One payment, yours forever.</p>
+        <p class="price-name">One cast <span class="module-zh" style="display:inline">一事一占</span></p>
+        <p class="price-amt">¥18<span class="unit">once</span></p>
+        <p class="price-desc">One question, one deep cast. No subscription.</p>
         <ul class="price-features">
-          <li>Everything in annual, forever</li>
-          <li>No subscriptions, no renewals</li>
-          <li>Free updates for the lifetime of the app</li>
-          <li>Future iPad &amp; Mac versions included</li>
+          <li>A single full deep reading</li>
+          <li>Yours until you use it — never expires</li>
+          <li>No renewal, no commitment</li>
+          <li>Buy again only when you need it</li>
         </ul>
-        <a class="btn btn-ghost" href="#download">Buy lifetime</a>
       </div>
 
     </div>
-    <p style="margin-top: 24px; font-size: 14px;">All three tiers include the same features &mdash; the only difference is the billing period. Pricing in your local currency will be shown at checkout.</p>
+    <p style="margin-top: 24px; font-size: 14px;">Prices shown in CNY; the App Store shows your local currency at purchase. Payment, renewal and refunds are handled by Apple — 灵镜 keeps no purchase records on any server (there is no server).</p>
   </div>
 </section>
 
@@ -538,13 +533,13 @@ The energy of 庚 will not wait for you.</span>
       <div class="trust-item">
         <span class="eyebrow">No tracking</span>
         <h3>No analytics. No ads. No third-party SDKs.</h3>
-        <p>灵镜 does not bundle Firebase, Google Analytics, Sentry, Adjust, or any tracking library. There are no ads in the current version.</p>
+        <p>灵镜 does not bundle Firebase, Google Analytics, Sentry, Adjust, or any tracking library. There are no ads.</p>
       </div>
 
       <div class="trust-item">
-        <span class="eyebrow">Your LLM, your call</span>
-        <h3>Your API key never leaves your device.</h3>
-        <p>If you configure an LLM API key, it is stored in the iOS Keychain on your device and sent directly to the provider you selected &mdash; not to us.</p>
+        <span class="eyebrow">On-device by construction</span>
+        <h3>No network code in the binary.</h3>
+        <p>The app contains no upload path at all &mdash; readings, chat and archives are computed and stored on this phone. Flip on airplane mode and everything still works.</p>
       </div>
 
       <div class="trust-item">
