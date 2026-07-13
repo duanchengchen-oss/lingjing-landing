@@ -40,11 +40,14 @@ a { color: var(--accent); }
   <h2>English</h2>
   <p>灵镜 (Magic Mirror) knows you by birth moment, not by account.
 
-Data stays on this device
-Your birth data, saved profiles, castings and readings are stored only on this phone (Apple&#x27;s on-device SwiftData store). The app has no servers, no accounts and no sign-up. The binary contains no upload path at all — casting works in airplane mode.
+Data stays on this device — unless you turn on cloud deep readings
+Your birth data, saved profiles, castings and readings are stored only on this phone (Apple&#x27;s on-device SwiftData store). No accounts, no sign-up. Every divination engine runs locally — casting works in airplane mode. Free features never make a network request.
 
 How readings are made
-Deep readings are generated on this device, by Apple Intelligence where the hardware supports it, or by a built-in deterministic text template. Both run locally; your birth data never leaves the phone.
+By default, deep readings are generated on this device — by Apple Intelligence where supported, or a built-in deterministic template — and your birth data never leaves the phone. Members may additionally enable "cloud deep readings": only then, your chart facts and questions travel over an encrypted connection to the mirror&#x27;s own relay server and on to a large language model for reasoning. Answers are returned and discarded — the relay stores nothing, keeps no logs of your content, and knows no account. Switch it off and everything returns on-device; while it is off, the app sends nothing.
+
+About iCloud Backup
+If you enable iCloud Backup in iOS, this phone&#x27;s 灵镜 data is included in your own iCloud backup (encrypted and held by Apple). That is the iOS backup system, not the app uploading; you can exclude 灵镜 from backup in system Settings.
 
 No tracking
 No ads. No analytics, statistics or tracking SDKs. No device identifiers, no user profiling.
@@ -56,7 +59,7 @@ Notifications and widgets
 Reminders (such as the evening reflection) are locally scheduled notifications, off by default and switchable at any time. If you enable the lock-screen or home-screen widgets, display data reaches them only through the on-device app group — it still never leaves this phone.
 
 Your data, your call
-Because everything lives on this device, deleting the app deletes all of it. There is nothing to request from anyone.
+Because everything lives on this device, deleting the app deletes all of it. There is nothing to request from anyone. Cloud deep readings are discarded after each answer — there is nothing server-side to delete either.
 
 Changes
 If data handling ever changes, this page changes with the version, and the change is named in the release notes.
@@ -71,11 +74,14 @@ For questions, use the support channel listed on the App Store page.
   <h2 class="zh">中文</h2>
   <p class="zh">灵镜是一面只认生辰、不认账号的镜。
 
-【数据只在此机】
-生辰、性别、所存档案、每一次排盘与解读，只保存在这部手机上（Apple 的本地 SwiftData 存储）。灵镜没有服务器，不设账号，无需注册。应用本体不含任何上传通道——飞行模式下，照样排盘。
+【数据只在此机——除非你亲手开启云上深读】
+生辰、性别、所存档案、每一次排盘与解读，只保存在这部手机上（Apple 的本地 SwiftData 存储）。灵镜不设账号，无需注册。排盘、六爻、梅花、黄历、紫微、奇门——所有推演引擎都在本机运行；飞行模式下，照样排盘。免费功能绝不联网。
 
 【解读如何生成】
-深读由本机的 Apple 智能（如设备支持）或内置的确定性文字模板生成。两者都在这部手机上运行；生辰不出此机。
+深读默认由本机的 Apple 智能（如设备支持）或内置的确定性文字模板生成，生辰不出此机。结缘会员可另行开启「云上深读」：开启后，且仅在开启后，你的命盘要点与提问会经加密通道送往灵镜自己的中转服务器，转交大模型推理，答毕即弃——中转不落盘、不留对话正文、不建账号。关闭开关，一切回到本机，随时可关。未开启时，应用不会发出任何请求。
+
+【关于 iCloud 备份】
+若你在 iOS 系统中开启了 iCloud 备份，这部手机上的灵镜数据会随系统备份进入你自己的 iCloud（由 Apple 加密保管）。这是 iOS 的备份机制，不是灵镜在上传；不想备份，可在系统设置中将灵镜排除。
 
 【不追踪】
 灵镜不含广告，不含任何统计、分析或追踪 SDK，不收集设备标识，不做用户画像。
@@ -87,7 +93,7 @@ For questions, use the support channel listed on the App Store page.
 夜课等提醒均为本机排定的本地通知，默认关闭，开关随时可改。若开启锁屏或桌面小组件，签文等展示数据仅通过本机的应用组共享给小组件，同样不离开这部手机。
 
 【数据自主】
-数据既然只在此机，删除应用即删除全部数据，无需向任何人申请。
+数据既然只在此机，删除应用即删除全部数据，无需向任何人申请。云上深读答毕即弃，服务器上无档可删。
 
 【变更】
 若数据处理方式有任何变化，本页将随版本更新，并在更新说明中写明。
