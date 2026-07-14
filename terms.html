@@ -3,30 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#09090B">
+<meta name="theme-color" content="#161823">
 <title>Terms of Use — 灵镜 / Magic Mirror</title>
 <link rel="icon" type="image/png" href="/icon-180.png">
+<link rel="preload" href="fonts/LingJingSerif-Display.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face {
+  font-family: "LingJingSerif";
+  src: url("fonts/LingJingSerif-Display.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
 :root {
-  --bg: #09090B; --surface: #18181B; --ink: #FAFAF9; --ink-dim: #A1A1AA;
-  --muted: #3F3F46; --accent: #F59E0B; --border: #27272A;
+  --bg: #161823; --surface: #222334; --ink: #F2ECDE;
+  --ink-dim: rgba(214, 236, 240, 0.62); --muted: rgba(214, 236, 240, 0.38);
+  --accent: #F2BE45; --gold-lo: #A78E44; --border: rgba(242, 236, 222, 0.08);
   --maxw: 720px; --gutter: 24px;
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-zh: "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
+  --font-display: "LingJingSerif", "Songti SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  --font-zh: "Songti SC", "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
 }
 * { box-sizing: border-box; }
+html { color-scheme: dark; }
 body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
        font-family: var(--font-sans); font-size: 16px; line-height: 1.7;
-       -webkit-font-smoothing: antialiased; }
-.container { max-width: var(--maxw); margin: 0 auto; padding: 48px var(--gutter); }
-h1 { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
-h2 { font-size: 20px; font-weight: 600; margin: 40px 0 8px; color: var(--accent); }
+       -webkit-font-smoothing: antialiased;
+       background-image: radial-gradient(1100px 640px at 14% -12%, rgba(242, 190, 69, 0.045), transparent 62%);
+       background-repeat: no-repeat; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 56px var(--gutter) 72px; }
+h1 { font-family: var(--font-display); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; margin: 24px 0 10px; }
+h2 { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin: 48px 0 10px; color: var(--accent); }
 p { color: var(--ink-dim); white-space: pre-wrap; }
 .zh { font-family: var(--font-zh); }
-.meta { color: var(--muted); font-size: 14px; margin: 0 0 32px; }
-a { color: var(--accent); }
-.rule { border: 0; border-top: 1px solid var(--border); margin: 48px 0; }
-.foot { border-top: 1px solid var(--border); padding: 24px var(--gutter);
+.meta { color: var(--muted); font-size: 14px; margin: 0 0 36px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+::selection { background: rgba(242, 190, 69, 0.28); color: var(--ink); }
+.rule { border: 0; border-top: 1px solid var(--border); margin: 56px 0; }
+.foot { border-top: 1px solid var(--border); padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
         text-align: center; color: var(--muted); font-size: 13px; }
 .foot a { color: var(--ink-dim); }
 </style>

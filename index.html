@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#09090B">
+<meta name="theme-color" content="#161823">
 <title>灵镜 / Magic Mirror — eight divinations, one mirror</title>
 <meta name="description" content="Eight classical divination systems — 八字, 紫微, 塔罗, 易经, 星座, 梅花, 奇门, 黄历 — paired with an optional AI interpreter. All engines run on your device. No account, no tracking, no ads.">
 <meta property="og:title" content="灵镜 / Magic Mirror — eight divinations, one mirror">
@@ -15,283 +15,443 @@
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="alternate" hreflang="en" href="/">
 <link rel="alternate" hreflang="zh-Hans" href="/">
+<link rel="preload" href="fonts/LingJingSerif-Display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/LingJingSerif-Text.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* === Brand tokens === */
+/* ============================================================
+   灵镜 landing — the lacquer chamber, set for the web.
+   Ground and metals from Theme/BrandColors.swift (dark table):
+   漆黑 #161823 · 玄青 #3D3B4F · 缟 #F2ECDE · 月白 #D6ECF0@.62
+   赤金 #F2BE45 · 乌金 #A78E44. One accent: the quiet gold.
+   ============================================================ */
+
+/* --- LingJingSerif (OFL, bundled with the app) — subset for this page --- */
+@font-face {
+  font-family: "LingJingSerif";
+  src: url("fonts/LingJingSerif-Display.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LingJingSerif";
+  src: url("fonts/LingJingSerif-Text.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --bg:       #09090B;
-  --surface:  #18181B;
-  --surface2: #1F1F23;
-  --ink:      #FAFAF9;
-  --ink-dim:  #A1A1AA;
-  --muted:    #3F3F46;
-  --accent:   #F59E0B;
-  --accent-d: #B8770A;
-  --border:   #27272A;
-  --radius-card:   16px;
-  --radius-button: 12px;
-  --radius-chip:   999px;
+  --bg:        #161823;
+  --bg-deep:   #10121B;
+  --surface:   #222334;
+  --surface-2: #1B1C2B;
+  --ink:       #F2ECDE;
+  --ink-dim:   rgba(214, 236, 240, 0.62);
+  --ink-faint: rgba(214, 236, 240, 0.38);
+  --gold:      #F2BE45;
+  --gold-lo:   #A78E44;
+  --hairline:      rgba(242, 236, 222, 0.08);
+  --hairline-soft: rgba(242, 236, 222, 0.05);
+  --hairline-gold: rgba(167, 142, 68, 0.38);
+  --radius-card: 24px;
+  --radius-pill: 999px;
   --maxw: 1120px;
   --gutter: 24px;
-  --section-y: 96px;
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, "Inter", system-ui, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
-  --font-zh: "Source Han Serif SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
+  --section-y: clamp(88px, 12vw, 148px);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "LingJingSerif", "Songti SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  --font-zh: "LingJingSerif", "Songti SC", "Source Han Serif SC", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
+
 * { box-sizing: border-box; }
+html { color-scheme: dark; scroll-behavior: smooth; }
 html, body { margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 img, svg { max-width: 100%; height: auto; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; }
-h1 { font-size: clamp(36px, 7vw, 64px); line-height: 1.05; margin: 0 0 16px; }
-h2 { font-size: clamp(28px, 4.5vw, 40px); line-height: 1.15; margin: 0 0 16px; }
-h3 { font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
-p  { margin: 0 0 16px; color: var(--ink-dim); }
-.lead { font-size: clamp(17px, 2.4vw, 20px); color: var(--ink-dim); }
-.eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
-.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
-section { padding: var(--section-y) 0; border-top: 1px solid var(--border); }
-section:first-of-type { border-top: 0; }
+a { color: var(--gold); text-decoration: none; transition: color 0.3s var(--ease); }
+a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+::selection { background: rgba(242, 190, 69, 0.28); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 
-/* === Navigation === */
+/* --- The chamber: candlelight + drifting gold dust, fixed behind everything --- */
+.veil {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(1200px 780px at 16% -12%, rgba(242, 190, 69, 0.05), transparent 62%),
+    radial-gradient(1000px 720px at 108% 16%, rgba(61, 59, 79, 0.45), transparent 64%),
+    radial-gradient(1400px 900px at 50% 118%, var(--bg-deep), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='840' height='840'%3E%3Cg fill='%23F2BE45'%3E%3Ccircle cx='71' cy='118' r='1.3' opacity='.32'/%3E%3Ccircle cx='233' cy='47' r='1' opacity='.18'/%3E%3Ccircle cx='412' cy='166' r='1.6' opacity='.26'/%3E%3Ccircle cx='598' cy='81' r='1' opacity='.2'/%3E%3Ccircle cx='754' cy='214' r='1.3' opacity='.3'/%3E%3Ccircle cx='137' cy='334' r='1' opacity='.16'/%3E%3Ccircle cx='519' cy='372' r='1.2' opacity='.22'/%3E%3Ccircle cx='688' cy='458' r='1' opacity='.15'/%3E%3Ccircle cx='86' cy='565' r='1.5' opacity='.27'/%3E%3Ccircle cx='313' cy='529' r='1' opacity='.17'/%3E%3Ccircle cx='452' cy='646' r='1.3' opacity='.24'/%3E%3Ccircle cx='641' cy='713' r='1' opacity='.19'/%3E%3Ccircle cx='196' cy='757' r='1.4' opacity='.28'/%3E%3Ccircle cx='779' cy='612' r='1' opacity='.14'/%3E%3Ccircle cx='546' cy='808' r='1.1' opacity='.2'/%3E%3Ccircle cx='352' cy='262' r='.9' opacity='.13'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- Type scale --- */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+h1 { font-size: clamp(40px, 6.6vw, 68px); line-height: 1.12; letter-spacing: 0.005em; margin: 0 0 22px; }
+h2 { font-size: clamp(29px, 4.2vw, 42px); line-height: 1.2; margin: 0 0 18px; }
+h3 { font-size: 21px; line-height: 1.35; margin: 0 0 8px; }
+p  { margin: 0 0 16px; color: var(--ink-dim); }
+.lead { font-size: clamp(17px, 2.3vw, 19px); line-height: 1.75; color: var(--ink-dim); max-width: 58ch; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold-lo); font-weight: 600; font-family: var(--font-sans);
+}
+.eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold-lo); flex: none; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.zh { font-family: var(--font-zh); }
+
+section { padding: var(--section-y) 0; position: relative; }
+section[id] { scroll-margin-top: 72px; }
+section + section::before,
+footer.foot::before {
+  content: ""; position: absolute; top: 0; left: 50%;
+  width: min(var(--maxw), calc(100% - 2 * var(--gutter)));
+  transform: translateX(-50%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline) 18%, var(--hairline) 82%, transparent);
+}
+.section-head { max-width: 620px; }
+.section-head .eyebrow { margin-bottom: 20px; }
+
+/* --- Navigation --- */
 .nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(9, 9, 11, 0.85);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(22, 24, 35, 0.72);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: 1px solid var(--hairline-soft);
 }
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 56px;
-}
-.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 600; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
-.brand-mark { width: 28px; height: 28px; }
-.brand-zh { font-family: var(--font-zh); }
-.nav-links { display: none; gap: 24px; align-items: center; }
+.brand-mark { width: 25px; height: 25px; flex: none; }
+.brand-zh { font-family: var(--font-zh); font-weight: 600; font-size: 18px; letter-spacing: 0.06em; }
+.brand-en { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.02em; margin-left: 2px; }
+.nav-links { display: flex; gap: 30px; align-items: center; }
 .nav-links a { color: var(--ink-dim); font-size: 14px; }
 .nav-links a:hover { color: var(--ink); text-decoration: none; }
-@media (min-width: 720px) { .nav-links { display: flex; } }
+@media (max-width: 719px) {
+  .nav-links { gap: 0; }
+  .nav-links a:not(.btn) { display: none; }
+}
 
-/* === Buttons === */
+/* --- Buttons: island pills, quiet gold --- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px;
-  padding: 14px 22px;
-  border-radius: var(--radius-button);
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
   font-weight: 600; font-size: 15px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition: transform 0.5s var(--ease), background 0.5s var(--ease),
+              border-color 0.5s var(--ease), color 0.5s var(--ease),
+              box-shadow 0.5s var(--ease);
 }
-.btn-primary { background: var(--accent); color: #1C1207; }
-.btn-primary:hover { background: #F7B33A; text-decoration: none; }
-.btn-ghost   { background: transparent; color: var(--ink); border-color: var(--border); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--gold); color: #231803;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 14px 34px -14px rgba(242, 190, 69, 0.4);
+}
+.btn-primary:hover {
+  background: #F6CA5F; text-decoration: none; transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 18px 38px -14px rgba(242, 190, 69, 0.48);
+}
+.btn-primary .btn-orb {
+  width: 26px; height: 26px; margin: -4px -12px -4px 2px;
+  border-radius: 50%; background: rgba(35, 24, 3, 0.16);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform 0.5s var(--ease);
+}
+.btn-primary:hover .btn-orb { transform: translate(2px, -1px); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: rgba(242, 236, 222, 0.18); }
+.btn-ghost:hover { border-color: var(--hairline-gold); color: var(--gold); text-decoration: none; }
+.btn-nav { padding: 9px 18px; font-size: 13.5px; }
 
-/* === Hero === */
-.hero {
-  padding: 64px 0 96px;
-  position: relative;
-  overflow: hidden;
-}
+/* --- Hero: the altar, off-axis --- */
+.hero { padding: clamp(64px, 9vw, 120px) 0 clamp(72px, 10vw, 128px); overflow: visible; }
 .hero-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 56px;
-  align-items: center;
+  display: grid; grid-template-columns: 1fr;
+  gap: 64px; align-items: center;
 }
-@media (min-width: 960px) {
-  .hero-grid { grid-template-columns: 1.1fr 0.9fr; gap: 64px; }
+@media (min-width: 960px) { .hero-grid { grid-template-columns: 1.08fr 0.92fr; gap: 48px; } }
+.hero .eyebrow { margin-bottom: 26px; }
+.hero h1 .accent { color: var(--gold); }
+.hero h1 .zh { letter-spacing: 0.04em; }
+.hero-bullets {
+  list-style: none; padding: 0; margin: 30px 0 0;
+  color: var(--ink-dim); font-size: 14.5px;
+  max-width: 460px;
 }
-.hero h1 .accent { color: var(--accent); }
-.hero .zh { font-family: var(--font-zh); }
-.hero-mark {
-  width: clamp(160px, 28vw, 240px);
-  margin-bottom: 28px;
-  filter: drop-shadow(0 0 60px rgba(245, 158, 11, 0.25));
-}
-.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-.hero-bullets { list-style: none; padding: 0; margin: 24px 0 0; color: var(--ink-dim); font-size: 14px; }
-.hero-bullets li { padding: 6px 0; }
-.hero-bullets li::before { content: "— "; color: var(--accent); }
+.hero-bullets li { padding: 9px 0; border-top: 1px solid var(--hairline-soft); }
+.hero-bullets li:first-child { border-top: 0; }
+.hero-bullets li::before { content: "— "; color: var(--gold-lo); }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
 
-.hero-shot {
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-  background: var(--surface);
+.hero-stage { position: relative; display: flex; justify-content: center; }
+@media (min-width: 960px) { .hero-stage { justify-content: flex-end; padding-right: 12px; } }
+.hero-stage::after {
+  content: ""; position: absolute; inset: auto 8% -9% 8%; height: 38%;
+  background: radial-gradient(closest-side, rgba(242, 190, 69, 0.1), transparent 72%);
+  z-index: -1; pointer-events: none;
 }
-.hero-shot img { display: block; width: 100%; }
+.device {
+  width: min(348px, 82vw);
+  padding: 9px;
+  border-radius: 50px;
+  background: linear-gradient(165deg, rgba(214, 236, 240, 0.075), rgba(214, 236, 240, 0.025) 55%);
+  border: 1px solid rgba(242, 236, 222, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.09),
+    0 48px 96px -32px rgba(8, 9, 14, 0.85),
+    0 20px 44px -20px rgba(8, 9, 14, 0.7);
+}
+.device-screen {
+  border-radius: 42px; overflow: hidden; display: block;
+  border: 1px solid rgba(16, 18, 27, 0.9);
+  background: var(--surface-2);
+}
+.device-screen img { display: block; width: 100%; }
 
-/* === Modules grid === */
+/* --- Modules: the ledger of instruments --- */
 .modules-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  display: grid; grid-template-columns: 1fr;
+  column-gap: 88px; margin-top: 56px;
+}
+@media (min-width: 860px) { .modules-grid { grid-template-columns: 1fr 1fr; } }
+.module-card {
+  display: grid; grid-template-columns: 84px 1fr;
+  gap: 0 22px; align-items: start;
+  padding: 30px 4px;
+  border-top: 1px solid var(--hairline);
+  position: relative;
+  transition: background 0.6s var(--ease);
+}
+.module-card:hover { background: rgba(214, 236, 240, 0.025); }
+.module-glyph {
+  grid-row: 1 / span 3;
+  font-family: var(--font-zh); font-weight: 600;
+  font-size: 34px; line-height: 1.15; letter-spacing: 0.1em;
+  color: var(--gold-lo);
+  transition: color 0.6s var(--ease);
+  padding-top: 3px;
+}
+.module-card:hover .module-glyph { color: var(--gold); }
+.module-index {
+  position: absolute; top: 32px; right: 6px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.14em; color: var(--ink-faint);
+}
+.module-name { color: var(--ink); font-family: var(--font-display); font-size: 20px; font-weight: 600; margin: 0 0 2px; line-height: 1.3; }
+.module-zh   { font-family: var(--font-zh); color: var(--ink-faint); font-size: 13.5px; letter-spacing: 0.05em; margin: 0 0 10px; }
+.module-desc { color: var(--ink-dim); font-size: 14.5px; margin: 0; line-height: 1.65; max-width: 40ch; }
+@media (max-width: 480px) {
+  .module-card { grid-template-columns: 68px 1fr; gap: 0 18px; }
+  .module-glyph { font-size: 28px; }
+}
+
+/* --- AI: the mirror speaks --- */
+.ai-grid {
+  display: grid; gap: 48px;
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin-top: 56px;
+}
+@media (min-width: 880px) { .ai-grid { grid-template-columns: 1.05fr 0.95fr; gap: 72px; } }
+.chat-shell {
+  padding: 7px;
+  border-radius: calc(var(--radius-card) + 7px);
+  background: rgba(214, 236, 240, 0.035);
+  border: 1px solid var(--hairline-soft);
+  box-shadow: 0 40px 80px -40px rgba(8, 9, 14, 0.8);
+}
+.chat-card {
+  background: linear-gradient(178deg, var(--surface), var(--surface-2) 80%);
+  border: 1px solid rgba(242, 236, 222, 0.055);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  padding: 26px 28px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--ink);
+  white-space: pre-wrap;
+  min-height: 200px;
+  overflow-x: auto;
+}
+@media (max-width: 560px) {
+  .chat-card {
+    white-space: pre;
+    font-size: 12px;
+    padding: 22px 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+.chat-card .user { color: var(--gold); }
+.chat-card .assistant { color: var(--ink); }
+.chat-card .meta { color: var(--ink-faint); font-size: 11.5px; letter-spacing: 0.04em; }
+.ai-copy h3 { font-size: clamp(22px, 2.6vw, 26px); margin-bottom: 14px; }
+.ai-copy .hero-bullets { max-width: none; }
+
+/* --- Pricing: three honest ways in --- */
+.pricing-grid {
+  display: grid; gap: 20px;
+  grid-template-columns: 1fr;
+  margin-top: 56px;
+  align-items: stretch;
+}
+@media (min-width: 860px) { .pricing-grid { grid-template-columns: 1fr 1.18fr 0.98fr; gap: 24px; } }
+.price-card {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 34px 30px;
+  position: relative;
+  background: rgba(214, 236, 240, 0.014);
+  transition: border-color 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.price-card:hover { border-color: rgba(242, 236, 222, 0.16); transform: translateY(-2px); }
+.price-card.featured {
+  border-color: var(--hairline-gold);
+  background:
+    linear-gradient(178deg, rgba(242, 190, 69, 0.05), transparent 34%),
+    linear-gradient(178deg, var(--surface), var(--surface-2) 85%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    0 36px 72px -36px rgba(8, 9, 14, 0.85);
+}
+.price-card.featured:hover { border-color: rgba(167, 142, 68, 0.6); }
+.price-card.featured::before {
+  content: "Best value";
+  position: absolute; top: -12px; left: 30px;
+  background: var(--gold); color: #231803;
+  font-size: 10.5px; font-weight: 700;
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  box-shadow: 0 6px 16px -6px rgba(242, 190, 69, 0.5);
+}
+.price-name { font-size: 13px; letter-spacing: 0.05em; color: var(--ink-dim); margin: 0 0 14px; }
+.price-name .module-zh { display: inline; font-size: 13px; color: var(--ink-faint); margin-left: 2px; }
+.price-amt {
+  font-family: var(--font-display);
+  font-size: 44px; font-weight: 600; color: var(--ink);
+  margin: 0 0 6px; line-height: 1.1;
+}
+.price-amt .unit { font-family: var(--font-sans); font-size: 14px; color: var(--ink-faint); font-weight: 400; margin-left: 6px; letter-spacing: 0.02em; }
+.price-desc { font-size: 14px; color: var(--ink-dim); margin: 0 0 22px; }
+.price-features {
+  list-style: none; padding: 18px 0 0; margin: 0;
+  font-size: 14px; border-top: 1px solid var(--hairline-soft);
+}
+.price-features li { color: var(--ink-dim); padding: 5px 0 5px 22px; position: relative; }
+.price-features li::before {
+  content: "—"; position: absolute; left: 0;
+  color: var(--gold-lo);
+}
+.price-note { margin-top: 36px; font-size: 13.5px; color: var(--ink-faint); max-width: 62ch; }
+
+/* --- Trust: the four vows, unboxed --- */
+.trust-grid {
+  display: grid; gap: 0 72px;
+  grid-template-columns: 1fr;
   margin-top: 40px;
 }
-.module-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 24px;
-  transition: transform 0.15s, border-color 0.15s;
-}
-.module-card:hover { transform: translateY(-2px); border-color: var(--accent); }
-.module-icon {
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  margin-bottom: 12px;
-}
-.module-icon svg { width: 32px; height: 32px; }
-.module-name { color: var(--ink); font-size: 18px; font-weight: 600; margin: 0 0 4px; }
-.module-zh   { font-family: var(--font-zh); color: var(--ink-dim); font-size: 14px; margin: 0 0 8px; }
-.module-desc { color: var(--ink-dim); font-size: 14px; margin: 0; line-height: 1.5; }
+@media (min-width: 800px) { .trust-grid { grid-template-columns: 1fr 1fr; } }
+.trust-item { padding: 30px 0 26px; border-top: 1px solid var(--hairline); }
+.trust-item .eyebrow { margin-bottom: 12px; }
+.trust-item h3 { color: var(--ink); margin: 0 0 8px; font-size: 19px; }
+.trust-item p  { color: var(--ink-dim); font-size: 14.5px; margin: 0; line-height: 1.7; max-width: 46ch; }
+.trust-links { margin-top: 44px; font-size: 15px; }
 
-/* === AI section === */
-.ai-grid {
+/* --- Download: the closing band --- */
+.dl-shell {
+  padding: 7px;
+  border-radius: calc(var(--radius-card) + 7px);
+  background: rgba(214, 236, 240, 0.035);
+  border: 1px solid var(--hairline-soft);
+}
+.dl-band {
+  background:
+    radial-gradient(720px 320px at 12% -30%, rgba(242, 190, 69, 0.07), transparent 62%),
+    linear-gradient(178deg, var(--surface), var(--surface-2) 85%);
+  border: 1px solid rgba(242, 236, 222, 0.055);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 60px);
   display: grid; gap: 32px;
   grid-template-columns: 1fr;
   align-items: center;
 }
-@media (min-width: 800px) { .ai-grid { grid-template-columns: 1fr 1fr; } }
-.chat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 24px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--ink);
-  white-space: pre-wrap;
-  min-height: 200px;
+@media (min-width: 880px) { .dl-band { grid-template-columns: 1.25fr 0.75fr; gap: 48px; } }
+.dl-band h2 { margin-bottom: 12px; }
+.dl-band .lead { margin-bottom: 0; }
+.dl-action { display: flex; flex-direction: column; gap: 16px; }
+@media (min-width: 880px) { .dl-action { align-items: flex-end; text-align: right; } }
+.btn-soon {
+  background: transparent; color: var(--gold);
+  border-color: var(--hairline-gold);
+  font-size: 16px; padding: 17px 30px; cursor: default;
 }
-.chat-card .user { color: var(--accent); }
-.chat-card .assistant { color: var(--ink); }
-.chat-card .meta { color: var(--ink-dim); font-size: 12px; }
+@media (max-width: 480px) { .btn-soon { font-size: 14px; padding: 15px 20px; letter-spacing: -0.01em; } }
+.dl-note { font-size: 13px; color: var(--ink-faint); margin: 0; max-width: 30ch; text-wrap: balance; }
 
-/* === Pricing === */
-.pricing-grid {
-  display: grid; gap: 16px;
-  grid-template-columns: 1fr;
-  margin-top: 32px;
-}
-@media (min-width: 760px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
-.price-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 28px 24px;
-  position: relative;
-}
-.price-card.featured { border-color: var(--accent); }
-.price-card.featured::before {
-  content: "Best value";
-  position: absolute; top: -10px; left: 24px;
-  background: var(--accent); color: #1C1207;
-  font-size: 11px; font-weight: 600;
-  padding: 3px 10px; border-radius: var(--radius-chip);
-  letter-spacing: 0.04em;
-}
-.price-name { font-size: 14px; color: var(--ink-dim); margin: 0 0 8px; }
-.price-amt  { font-size: 36px; font-weight: 600; color: var(--ink); margin: 0 0 4px; letter-spacing: -0.02em; }
-.price-amt .unit { font-size: 14px; color: var(--ink-dim); font-weight: 400; margin-left: 4px; }
-.price-desc { font-size: 14px; color: var(--ink-dim); margin: 0 0 20px; }
-.price-features { list-style: none; padding: 0; margin: 0 0 24px; font-size: 14px; }
-.price-features li { color: var(--ink-dim); padding: 4px 0; }
-.price-features li::before { content: "✓ "; color: var(--accent); margin-right: 4px; }
-.price-card .btn { width: 100%; }
-
-/* === Trust / privacy === */
-.trust-grid {
-  display: grid; gap: 16px;
-  grid-template-columns: 1fr;
-  margin-top: 32px;
-}
-@media (min-width: 760px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
-.trust-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: 24px;
-}
-.trust-item .eyebrow { display: block; margin-bottom: 8px; }
-.trust-item h3 { color: var(--ink); margin: 0 0 6px; }
-.trust-item p  { color: var(--ink-dim); font-size: 14px; margin: 0; }
-
-/* === Footer === */
-.foot {
-  border-top: 1px solid var(--border);
-  padding: 32px 0;
-  color: var(--ink-dim);
-  font-size: 13px;
-}
-.foot-inner {
-  display: flex; flex-direction: column; gap: 16px;
-  align-items: flex-start;
-}
-@media (min-width: 720px) {
-  .foot-inner { flex-direction: row; justify-content: space-between; align-items: center; }
-}
-.foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
-.foot-links a { color: var(--ink-dim); }
+/* --- Footer --- */
+.foot { position: relative; padding: 40px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--ink-faint); font-size: 13px; }
+.foot-inner { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+@media (min-width: 720px) { .foot-inner { flex-direction: row; justify-content: space-between; align-items: center; } }
+.foot strong { color: var(--ink-dim); font-weight: 600; }
+.foot .brand-zh { font-size: 14px; }
+.foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.foot-links a { color: var(--ink-faint); }
 .foot-links a:hover { color: var(--ink); text-decoration: none; }
 
-/* === Language switcher === */
-.lang-switch { display: flex; gap: 4px; align-items: center; }
-.lang-switch button {
-  background: transparent; border: 1px solid var(--border);
-  color: var(--ink-dim); padding: 4px 10px;
-  border-radius: var(--radius-chip);
-  font-size: 12px; cursor: pointer;
-  font-family: var(--font-sans);
+/* --- Entry choreography (transform/opacity only; .js gate keeps
+       content visible when scripts are off) --- */
+.js .reveal { opacity: 0; transform: translateY(22px); }
+.reveal.in {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
 }
-.lang-switch button.active { color: var(--accent); border-color: var(--accent); }
-
-/* === Splash pad === */
-.splash {
-  display: grid; place-items: center;
-  min-height: 60vh;
-  text-align: center;
-  padding: 24px;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; }
+  .reveal.in { transition: none; }
+  .btn, .price-card, .module-card, .module-glyph { transition: none; }
 }
-.splash-mark { width: clamp(120px, 24vw, 200px); margin-bottom: 24px; }
 </style>
 </head>
 <body>
+
+<div class="veil" aria-hidden="true"></div>
 
 <!-- ===== Navigation ===== -->
 <nav class="nav">
   <div class="container nav-inner">
     <a class="brand" href="#">
       <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F59E0B"/>
-        <circle cx="50" cy="32" r="3" fill="#FAFAF9"/>
+        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F2BE45"/>
+        <circle cx="50" cy="32" r="3" fill="#F2ECDE"/>
       </svg>
-      <span><span class="brand-zh">灵镜</span> &nbsp;Magic Mirror</span>
+      <span><span class="brand-zh">灵镜</span><span class="brand-en">Magic Mirror</span></span>
     </a>
     <div class="nav-links">
       <a href="#modules">Modules</a>
       <a href="#ai">AI</a>
       <a href="#pricing">Pricing</a>
       <a href="#privacy">Privacy</a>
-      <a class="btn btn-primary" href="#download" style="padding: 8px 14px; font-size: 14px;">Get the app</a>
+      <a class="btn btn-primary btn-nav" href="#download">Get the app</a>
     </div>
   </div>
 </nav>
@@ -299,11 +459,8 @@ section:first-of-type { border-top: 0; }
 <!-- ===== Hero ===== -->
 <header class="hero">
   <div class="container hero-grid">
-    <div>
-      <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F59E0B"/>
-        <circle cx="50" cy="32" r="3" fill="#FAFAF9"/>
-      </svg>
+    <div class="reveal">
+      <span class="eyebrow">灵镜 · for iPhone</span>
       <h1>
         <span class="zh">八门术数</span>,<br>
         <span class="accent">one mirror.</span>
@@ -320,14 +477,20 @@ section:first-of-type { border-top: 0; }
         <li>First cast of every instrument free, no time limit</li>
       </ul>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#download">Download for iPhone</a>
+        <a class="btn btn-primary" href="#download">Get the app
+          <span class="btn-orb" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 10 10 2M4 2h6v6" stroke="#231803" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
         <a class="btn btn-ghost" href="#modules">See all 8 modules</a>
       </div>
     </div>
-    <div>
-      <div class="hero-shot">
-        <img src="screenshots/6.7/01_screen.png"
-             alt="灵镜 app — Mirror home screen with quick-start chips" loading="eager">
+    <div class="hero-stage reveal" style="--d: 140ms;">
+      <div class="device">
+        <div class="device-screen">
+          <img src="screenshots/hero-altar-en.webp" width="880" height="1913"
+               alt="灵镜 app — the daily altar: today's pillar and fortune card above the lot cylinder, waiting to be drawn" loading="eager" fetchpriority="high">
+        </div>
       </div>
     </div>
   </div>
@@ -336,78 +499,72 @@ section:first-of-type { border-top: 0; }
 <!-- ===== Modules ===== -->
 <section id="modules">
   <div class="container">
-    <span class="eyebrow">Eight systems, one app</span>
-    <h2>Every divination, in one place.</h2>
-    <p>Classical Chinese metaphysics meets Western astrology and Tarot &mdash; all in a single iPhone app, all running locally on your device.</p>
+    <div class="section-head reveal">
+      <span class="eyebrow">Eight systems, one app</span>
+      <h2>Every divination, in one place.</h2>
+      <p class="lead">Classical Chinese metaphysics meets Western astrology and Tarot &mdash; all in a single iPhone app, all running locally on your device.</p>
+    </div>
     <div class="modules-grid">
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.39 8.42 21 9.27 16 13.97 17.18 21 12 17.27 6.82 21 8 13.97 3 9.27 9.61 8.42z"/></svg>
-        </div>
+      <div class="module-card reveal">
+        <span class="module-glyph" aria-hidden="true">八字</span>
+        <span class="module-index">01</span>
         <h3 class="module-name">Bazi</h3>
         <p class="module-zh">八字 · Four Pillars</p>
         <p class="module-desc">Your birth chart of year, month, day, hour &mdash; with day-master element, hidden stems, and the ten-gods map.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-        </div>
+      <div class="module-card reveal" style="--d: 60ms;">
+        <span class="module-glyph" aria-hidden="true">紫微</span>
+        <span class="module-index">02</span>
         <h3 class="module-name">Zi Wei</h3>
         <p class="module-zh">紫微斗数</p>
         <p class="module-desc">The imperial star chart: 14 main stars across 12 palaces, with the four transformations (四化).</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 7v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7z"/></svg>
-        </div>
+      <div class="module-card reveal">
+        <span class="module-glyph" aria-hidden="true">塔罗</span>
+        <span class="module-index">03</span>
         <h3 class="module-name">Tarot</h3>
         <p class="module-zh">塔罗</p>
         <p class="module-desc">78-card Rider&ndash;Waite&ndash;Smith deck. Three spreads: single card, three cards, and the Celtic cross.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 2 7l10 5 10-5z M2 17l10 5 10-5 M2 12l10 5 10-5"/></svg>
-        </div>
+      <div class="module-card reveal" style="--d: 60ms;">
+        <span class="module-glyph" aria-hidden="true">易经</span>
+        <span class="module-index">04</span>
         <h3 class="module-name">I Ching</h3>
         <p class="module-zh">易经</p>
         <p class="module-desc">Cast by time or by number. The original hexagram, the changed hexagram, and the moving line.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.5 9 22 9.5 16 14.5 18 22 12 18 6 22 8 14.5 2 9.5 9.5 9z"/></svg>
-        </div>
+      <div class="module-card reveal">
+        <span class="module-glyph" aria-hidden="true">星座</span>
+        <span class="module-index">05</span>
         <h3 class="module-name">Astrology</h3>
         <p class="module-zh">西方星座</p>
         <p class="module-desc">Natal chart with Sun, Moon, Ascendant, the twelve houses, and the major aspects.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z M12 6a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0z"/></svg>
-        </div>
+      <div class="module-card reveal" style="--d: 60ms;">
+        <span class="module-glyph" aria-hidden="true">梅花</span>
+        <span class="module-index">06</span>
         <h3 class="module-name">Plum Blossom</h3>
         <p class="module-zh">梅花易数</p>
         <p class="module-desc">Numbers into hexagrams. The body-function-mutual-change (体用互变) analysis with moving-line trace.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z"/></svg>
-        </div>
+      <div class="module-card reveal">
+        <span class="module-glyph" aria-hidden="true">奇门</span>
+        <span class="module-index">07</span>
         <h3 class="module-name">Qi Men</h3>
         <p class="module-zh">奇门遁甲</p>
         <p class="module-desc">A 9-palace, 9-star, 8-door plate cast for any moment in time.</p>
       </div>
 
-      <div class="module-card">
-        <div class="module-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V9h14z"/></svg>
-        </div>
+      <div class="module-card reveal" style="--d: 60ms;">
+        <span class="module-glyph" aria-hidden="true">黄历</span>
+        <span class="module-index">08</span>
         <h3 class="module-name">Almanac</h3>
         <p class="module-zh">黄历</p>
         <p class="module-desc">Daily 宜忌, 冲煞, 彭祖百忌 &mdash; the classical almanac for any date you choose.</p>
@@ -420,11 +577,14 @@ section:first-of-type { border-top: 0; }
 <!-- ===== AI ===== -->
 <section id="ai">
   <div class="container">
-    <span class="eyebrow">On-device interpreter</span>
-    <h2>Ask the mirror.</h2>
-    <p>Pair any reading with the 灵镜 chat assistant. Deep readings are generated on this phone — by Apple&nbsp;Intelligence where the hardware supports it, or by a built-in deterministic interpreter. No API key, no account. Members can optionally switch on cloud deep readings; everything else stays on the device.</p>
-    <div class="ai-grid" style="margin-top: 40px;">
-      <div class="chat-card">
+    <div class="section-head reveal">
+      <span class="eyebrow">On-device interpreter</span>
+      <h2>Ask the mirror.</h2>
+      <p class="lead">Pair any reading with the 灵镜 chat assistant. Deep readings are generated on this phone — by Apple&nbsp;Intelligence where the hardware supports it, or by a built-in deterministic interpreter. No API key, no account. Members can optionally switch on cloud deep readings; everything else stays on the device.</p>
+    </div>
+    <div class="ai-grid">
+      <div class="chat-shell reveal">
+        <div class="chat-card">
 <span class="meta">— 灵镜  ·  Bazi engine output</span>
 
 Year pillar:   庚午  (Yang Metal, Horse)
@@ -452,11 +612,12 @@ stepping into a public-facing role.
 
 Avoid: passive roles that require waiting for permission.
 The energy of 庚 will not wait for you.</span>
+        </div>
       </div>
-      <div>
+      <div class="ai-copy reveal" style="--d: 120ms;">
         <h3>It runs on this phone.</h3>
         <p>灵镜's engines and archives run entirely on this phone — casting, the almanac and every free feature open no network connection. Where the device supports Apple&nbsp;Intelligence, the mirror speaks through the on-device model; a hand-written deterministic interpreter covers the rest. Members can optionally switch on cloud deep readings: chart facts and questions go through the mirror's own relay to a large model, are answered, and discarded. Off by default; off means off.</p>
-        <ul class="hero-bullets" style="margin: 16px 0;">
+        <ul class="hero-bullets" style="margin: 20px 0;">
           <li>No API key, no sign-up — free tier never leaves the device</li>
           <li>Works in airplane mode — try it</li>
           <li>The same engines the readings use, tool-called mid-chat</li>
@@ -470,12 +631,14 @@ The energy of 庚 will not wait for you.</span>
 <!-- ===== Pricing ===== -->
 <section id="pricing">
   <div class="container">
-    <span class="eyebrow">Pricing</span>
-    <h2>Pay what feels right.</h2>
-    <p>The daily practice is free — today’s sign, the almanac, the basic chart. Your first cast of every deeper instrument is free too, with no time limit and no card. Beyond that, three honest ways in:</p>
+    <div class="section-head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2>Pay what feels right.</h2>
+      <p class="lead">The daily practice is free — today’s sign, the almanac, the basic chart. Your first cast of every deeper instrument is free too, with no time limit and no card. Beyond that, three honest ways in:</p>
+    </div>
     <div class="pricing-grid">
 
-      <div class="price-card">
+      <div class="price-card reveal">
         <p class="price-name">Monthly <span class="module-zh" style="display:inline">结缘 · 月</span></p>
         <p class="price-amt">¥15<span class="unit">/mo</span></p>
         <p class="price-desc">For a season of questions. Cancel anytime.</p>
@@ -487,7 +650,7 @@ The energy of 庚 will not wait for you.</span>
         </ul>
       </div>
 
-      <div class="price-card featured">
+      <div class="price-card featured reveal" style="--d: 80ms;">
         <p class="price-name">Annual <span class="module-zh" style="display:inline">结缘 · 年</span></p>
         <p class="price-amt">¥98<span class="unit">/yr</span></p>
         <p class="price-desc">7-day free trial for eligible new members.</p>
@@ -499,7 +662,7 @@ The energy of 庚 will not wait for you.</span>
         </ul>
       </div>
 
-      <div class="price-card">
+      <div class="price-card reveal" style="--d: 160ms;">
         <p class="price-name">One cast <span class="module-zh" style="display:inline">一事一占</span></p>
         <p class="price-amt">¥18<span class="unit">once</span></p>
         <p class="price-desc">One question, one deep cast. No subscription.</p>
@@ -512,44 +675,46 @@ The energy of 庚 will not wait for you.</span>
       </div>
 
     </div>
-    <p style="margin-top: 24px; font-size: 14px;">Prices shown in CNY; the App Store shows your local currency at purchase. Payment, renewal and refunds are handled by Apple — 灵镜 keeps no purchase records on any server.</p>
+    <p class="price-note reveal">Prices shown in CNY; the App Store shows your local currency at purchase. Payment, renewal and refunds are handled by Apple — 灵镜 keeps no purchase records on any server.</p>
   </div>
 </section>
 
 <!-- ===== Trust / Privacy ===== -->
 <section id="privacy">
   <div class="container">
-    <span class="eyebrow">Privacy by design</span>
-    <h2>Your data stays on your device.</h2>
-    <p>灵镜 keeps no data on any server. The one optional cloud feature answers and forgets.</p>
+    <div class="section-head reveal">
+      <span class="eyebrow">Privacy by design</span>
+      <h2>Your data stays on your device.</h2>
+      <p class="lead">灵镜 keeps no data on any server. The one optional cloud feature answers and forgets.</p>
+    </div>
     <div class="trust-grid">
 
-      <div class="trust-item">
+      <div class="trust-item reveal">
         <span class="eyebrow">No account</span>
         <h3>No sign-up. No email.</h3>
         <p>You install the app and start using it. There is no account, no email verification, no password to forget.</p>
       </div>
 
-      <div class="trust-item">
+      <div class="trust-item reveal" style="--d: 60ms;">
         <span class="eyebrow">No tracking</span>
         <h3>No analytics. No ads. No third-party SDKs.</h3>
         <p>灵镜 does not bundle Firebase, Google Analytics, Sentry, Adjust, or any tracking library. There are no ads.</p>
       </div>
 
-      <div class="trust-item">
+      <div class="trust-item reveal">
         <span class="eyebrow">Local by default</span>
         <h3>The free app has no upload path.</h3>
         <p>Casting, readings and archives are computed and stored on this phone &mdash; flip on airplane mode and they still work. The single network path in the app is the optional, member-only cloud deep reading, which exists only after you switch it on.</p>
       </div>
 
-      <div class="trust-item">
+      <div class="trust-item reveal" style="--d: 60ms;">
         <span class="eyebrow">Right to be forgotten</span>
         <h3>Delete the app. That's it.</h3>
-        <p>Uninstalling the app removes all local data. Cloud deep readings are discarded after each answer &mdash; there is nothing server-side to delete either.</p>
+        <p>Uninstalling the app removes all local data. Cloud deep readings are discarded after each answer &mdash; none of your content exists server-side to delete. The relay keeps only fourteen days of count-and-latency records, with nothing readable inside.</p>
       </div>
 
     </div>
-    <p style="margin-top: 24px;">
+    <p class="trust-links reveal">
       <a href="privacy.html">Read the full privacy policy &rarr;</a>
       &nbsp;·&nbsp;
       <a href="terms.html">Terms of service &rarr;</a>
@@ -558,17 +723,23 @@ The energy of 庚 will not wait for you.</span>
 </section>
 
 <!-- ===== Download CTA ===== -->
-<section id="download" style="padding: 80px 0;">
-  <div class="container" style="text-align: center;">
-    <span class="eyebrow">Available now</span>
-    <h2>Try 灵镜 on your iPhone.</h2>
-    <p class="lead" style="max-width: 600px; margin: 0 auto 28px;">First cast of every instrument free. No time limit, no account. iPhone &amp; iPad. iOS 17+.</p>
-    <span class="btn btn-primary" style="font-size: 17px; padding: 18px 32px; cursor: default;" aria-disabled="true">
-      Coming soon to the App Store
-    </span>
-    <p style="margin-top: 24px; font-size: 13px; color: var(--muted);">
-      In review. The download link will appear here on launch day.
-    </p>
+<section id="download">
+  <div class="container">
+    <div class="dl-shell reveal">
+      <div class="dl-band">
+        <div>
+          <span class="eyebrow" style="margin-bottom: 18px;">Available now</span>
+          <h2>Try 灵镜 on your iPhone.</h2>
+          <p class="lead">First cast of every instrument free. No time limit, no account. iPhone &amp; iPad. iOS 17+.</p>
+        </div>
+        <div class="dl-action">
+          <span class="btn btn-soon" aria-disabled="true">
+            Coming soon to the App Store
+          </span>
+          <p class="dl-note">Launching soon. The download link will appear here on launch day.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -576,7 +747,7 @@ The energy of 庚 will not wait for you.</span>
 <footer class="foot">
   <div class="container foot-inner">
     <div>
-      <strong>灵镜 / Magic Mirror</strong> &nbsp;·&nbsp;
+      <strong><span class="brand-zh">灵镜</span> / Magic Mirror</strong> &nbsp;·&nbsp;
       <span>Built for iPhone. Made in Hong Kong.</span>
     </div>
     <div class="foot-links">
@@ -587,6 +758,24 @@ The energy of 庚 will not wait for you.</span>
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  document.documentElement.classList.add("js");
+  var els = document.querySelectorAll(".reveal");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
 
 </body>
 </html>
