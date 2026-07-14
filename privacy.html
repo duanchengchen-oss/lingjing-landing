@@ -5,119 +5,417 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#161823">
 <title>Privacy Policy — 灵镜 / Magic Mirror</title>
+<meta name="description" content="The privacy policy of 灵镜 / Magic Mirror — mirrored verbatim from the legal text bundled inside the app, in English and 中文.">
+<meta property="og:title" content="Privacy Policy — 灵镜 / Magic Mirror">
+<meta property="og:description" content="The privacy policy of 灵镜 / Magic Mirror — mirrored verbatim from the legal text bundled inside the app, in English and 中文.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="/og.png">
 <link rel="icon" type="image/png" href="/icon-180.png">
-<link rel="preload" href="fonts/LingJingSerif-Display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="preload" href="fonts/LingJingSerif-Legal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* ============================================================
+   灵镜 legal pages — the same lacquer chamber as the landing,
+   set for a document. Ground and metals from Theme/BrandColors:
+   漆黑 #161823 · 缟 #F2ECDE · 月白@.62 · 赤金 #F2BE45 · 乌金 #A78E44.
+   The legal body text is verbatim from LegalPages.swift — only the
+   chrome around it, and whole-line styling spans, live here.
+   ============================================================ */
+
 @font-face {
   font-family: "LingJingSerif";
-  src: url("fonts/LingJingSerif-Display.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
+  src: url("fonts/LingJingSerif-Legal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
+
 :root {
-  --bg: #161823; --surface: #222334; --ink: #F2ECDE;
-  --ink-dim: rgba(214, 236, 240, 0.62); --muted: rgba(214, 236, 240, 0.38);
-  --accent: #F2BE45; --gold-lo: #A78E44; --border: rgba(242, 236, 222, 0.08);
-  --maxw: 720px; --gutter: 24px;
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-display: "LingJingSerif", "Songti SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
-  --font-zh: "Songti SC", "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
+  --bg:        #161823;
+  --bg-deep:   #10121B;
+  --surface:   #222334;
+  --surface-2: #1B1C2B;
+  --ink:       #F2ECDE;
+  --ink-dim:   rgba(214, 236, 240, 0.62);
+  --ink-mute:  rgba(214, 236, 240, 0.55);
+  --ink-faint: rgba(214, 236, 240, 0.38);
+  --gold:      #F2BE45;
+  --gold-lo:   #A78E44;
+  --hairline:      rgba(242, 236, 222, 0.08);
+  --hairline-soft: rgba(242, 236, 222, 0.05);
+  --hairline-gold: rgba(167, 142, 68, 0.38);
+  --radius-pill: 999px;
+  --maxw: 1120px;
+  --gutter: 24px;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "LingJingSerif", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  --font-zh-body: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", "SimSun", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
+
 * { box-sizing: border-box; }
-html { color-scheme: dark; }
-body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-       font-family: var(--font-sans); font-size: 16px; line-height: 1.7;
-       -webkit-font-smoothing: antialiased;
-       background-image: radial-gradient(1100px 640px at 14% -12%, rgba(242, 190, 69, 0.045), transparent 62%);
-       background-repeat: no-repeat; }
-.container { max-width: var(--maxw); margin: 0 auto; padding: 56px var(--gutter) 72px; }
-h1 { font-family: var(--font-display); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; margin: 24px 0 10px; }
-h2 { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin: 48px 0 10px; color: var(--accent); }
-p { color: var(--ink-dim); white-space: pre-wrap; }
-.zh { font-family: var(--font-zh); }
-.meta { color: var(--muted); font-size: 14px; margin: 0 0 36px; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
+html { color-scheme: dark; scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; height: auto; }
+a { color: var(--gold); text-decoration: none; transition: color 0.3s var(--ease); }
+a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 ::selection { background: rgba(242, 190, 69, 0.28); color: var(--ink); }
-.rule { border: 0; border-top: 1px solid var(--border); margin: 56px 0; }
-.foot { border-top: 1px solid var(--border); padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
-        text-align: center; color: var(--muted); font-size: 13px; }
-.foot a { color: var(--ink-dim); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.zh { font-family: var(--font-zh-body); }
+
+/* --- The chamber: candlelight + gold dust, fixed behind everything --- */
+.veil {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(1200px 780px at 16% -12%, rgba(242, 190, 69, 0.05), transparent 62%),
+    radial-gradient(1000px 720px at 108% 16%, rgba(61, 59, 79, 0.45), transparent 64%),
+    radial-gradient(1400px 900px at 50% 118%, var(--bg-deep), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='840' height='840'%3E%3Cg fill='%23F2BE45'%3E%3Ccircle cx='71' cy='118' r='1.3' opacity='.32'/%3E%3Ccircle cx='233' cy='47' r='1' opacity='.18'/%3E%3Ccircle cx='412' cy='166' r='1.6' opacity='.26'/%3E%3Ccircle cx='598' cy='81' r='1' opacity='.2'/%3E%3Ccircle cx='754' cy='214' r='1.3' opacity='.3'/%3E%3Ccircle cx='137' cy='334' r='1' opacity='.16'/%3E%3Ccircle cx='519' cy='372' r='1.2' opacity='.22'/%3E%3Ccircle cx='688' cy='458' r='1' opacity='.15'/%3E%3Ccircle cx='86' cy='565' r='1.5' opacity='.27'/%3E%3Ccircle cx='313' cy='529' r='1' opacity='.17'/%3E%3Ccircle cx='452' cy='646' r='1.3' opacity='.24'/%3E%3Ccircle cx='641' cy='713' r='1' opacity='.19'/%3E%3Ccircle cx='196' cy='757' r='1.4' opacity='.28'/%3E%3Ccircle cx='779' cy='612' r='1' opacity='.14'/%3E%3Ccircle cx='546' cy='808' r='1.1' opacity='.2'/%3E%3Ccircle cx='352' cy='262' r='.9' opacity='.13'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- Navigation (index grammar) --- */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(22, 24, 35, 0.72);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.brand-mark { width: 25px; height: 25px; flex: none; }
+.brand-zh { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.06em; }
+.brand-en { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.02em; margin-left: 2px; }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a { color: var(--ink-dim); font-size: 14px; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.nav-links a[aria-current="page"] { color: var(--gold); }
+@media (max-width: 719px) {
+  .nav-links { gap: 0; }
+  .nav-links a:not(.btn) { display: none; }
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.5s var(--ease), background 0.5s var(--ease),
+              border-color 0.5s var(--ease), color 0.5s var(--ease),
+              box-shadow 0.5s var(--ease);
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--gold); color: #231803;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 14px 34px -14px rgba(242, 190, 69, 0.4);
+}
+.btn-primary:hover {
+  background: #F6CA5F; text-decoration: none; transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 18px 38px -14px rgba(242, 190, 69, 0.48);
+}
+.btn-nav { padding: 9px 18px; font-size: 13.5px; }
+
+/* --- Document head --- */
+.doc-head { padding: clamp(56px, 8.5vw, 104px) 0 clamp(36px, 5vw, 56px); }
+.doc-head-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; align-items: end; }
+@media (min-width: 900px) { .doc-head-grid { grid-template-columns: minmax(0, 1fr) auto; gap: 48px; } }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold-lo); font-weight: 600; font-family: var(--font-sans);
+}
+.eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold-lo); flex: none; }
+.doc-head .eyebrow { margin-bottom: 24px; }
+h1 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(38px, 5.4vw, 56px); line-height: 1.08;
+  letter-spacing: 0.005em; margin: 0;
+}
+.h1-zh {
+  display: block; font-family: var(--font-display); font-weight: 600;
+  color: var(--gold); font-size: clamp(16px, 2vw, 19px);
+  letter-spacing: 0.34em; margin-top: 16px;
+}
+.doc-meta { color: var(--ink-dim); font-size: 14px; line-height: 1.7; margin: 22px 0 0; max-width: 54ch; }
+
+/* --- Language jump pills --- */
+.doc-jump { display: flex; gap: 12px; flex-wrap: wrap; }
+.jump-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: var(--radius-pill);
+  border: 1px solid rgba(242, 236, 222, 0.18);
+  color: var(--ink-dim); font-size: 13.5px; font-weight: 600;
+  transition: border-color 0.5s var(--ease), color 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.jump-pill:hover { border-color: var(--hairline-gold); color: var(--gold); text-decoration: none; transform: translateY(-1px); }
+.jump-pill:active { transform: scale(0.98); }
+.jump-pill .pi { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--ink-mute); font-weight: 400; }
+.jump-pill .zh-label { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.1em; }
+
+/* --- The document: sticky language rail + measured column --- */
+.doc { padding-bottom: clamp(72px, 10vw, 128px); }
+.doc-section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; padding: clamp(44px, 6vw, 72px) 0; position: relative; }
+@media (min-width: 920px) { .doc-section { grid-template-columns: 168px minmax(0, 620px); } }
+.doc-section[id] { scroll-margin-top: 74px; }
+.doc .doc-section:first-of-type::before,
+.doc-section + .doc-section::before,
+.doc-next::before,
+footer.foot::before {
+  content: ""; position: absolute; top: 0; left: 50%;
+  width: min(var(--maxw), calc(100% - 2 * var(--gutter)));
+  transform: translateX(-50%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline) 18%, var(--hairline) 82%, transparent);
+}
+.doc .doc-section:first-of-type::before,
+.doc-section + .doc-section::before,
+.doc-next::before { width: 100%; }
+.doc-marker { align-self: start; }
+@media (min-width: 920px) { .doc-marker { position: sticky; top: 92px; } }
+.doc-marker::before { content: ""; display: block; width: 26px; height: 1px; background: var(--gold-lo); margin-bottom: 16px; }
+.doc-marker-index { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-mute); display: block; }
+.doc-marker-label { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.3; color: var(--ink); margin: 10px 0 0; letter-spacing: 0.04em; }
+
+/* --- The legal body: verbatim text, measured and lit --- */
+.legal-body {
+  white-space: pre-wrap; overflow-wrap: break-word;
+  font-size: 15.5px; line-height: 1.85;
+  color: var(--ink-dim); margin: 0;
+}
+.legal-body .sect {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 17px; line-height: 1.55;
+  color: var(--ink); letter-spacing: 0.01em;
+}
+.legal-body .sect .br { color: var(--gold-lo); }
+.legal-body .opener {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 18.5px; line-height: 1.65;
+  color: var(--ink); letter-spacing: 0.01em;
+}
+.legal-body .stamp { font-size: 13px; color: var(--ink-mute); letter-spacing: 0.08em; }
+.legal-body.zh {
+  font-family: var(--font-zh-body);
+  font-size: 16px; line-height: 2.05; letter-spacing: 0.014em;
+}
+.legal-body.zh .sect { font-size: 17.5px; letter-spacing: 0.06em; line-height: 1.6; }
+.legal-body.zh .opener { font-size: 19px; letter-spacing: 0.05em; line-height: 1.75; }
+
+/* --- Cross-links --- */
+.doc-next {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; flex-wrap: wrap;
+  margin-top: clamp(24px, 4vw, 40px); padding-top: 30px;
+  position: relative; font-size: 14.5px;
+}
+
+/* --- Footer (index grammar) --- */
+.foot { position: relative; padding: 40px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--ink-mute); font-size: 13px; }
+.foot-inner { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+@media (min-width: 720px) { .foot-inner { flex-direction: row; justify-content: space-between; align-items: center; } }
+.foot strong { color: var(--ink-dim); font-weight: 600; }
+.foot .brand-zh { font-size: 14px; }
+.foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.foot-links a { color: var(--ink-mute); }
+.foot-links a:hover { color: var(--ink); text-decoration: none; }
+
+/* --- Entry choreography (transform/opacity only; .js gate keeps
+       content visible when scripts are off) --- */
+.js .reveal { opacity: 0; transform: translateY(22px); }
+.reveal.in {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; }
+  .reveal.in { transition: none; }
+  .btn, .jump-pill { transition: none; }
+}
+
+/* --- Print: a legal document, on paper --- */
+@media print {
+  .veil, .nav, .doc-jump, .doc-next, .foot { display: none; }
+  body { background: #fff; color: #111; }
+  .legal-body, .legal-body.zh, .doc-meta { color: #333; }
+  .legal-body .sect, .legal-body .opener, .doc-marker-label, h1 { color: #000; }
+  .h1-zh, .eyebrow, .legal-body .sect .br, .doc-marker-index, .legal-body .stamp { color: #555; }
+  .doc-marker { position: static; }
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <a href="index.html" style="font-size: 14px;">&larr; back to 灵镜</a>
-  <h1>Privacy Policy</h1>
-  <p class="meta">This page mirrors, verbatim, the legal text bundled inside the app (Settings → 隐私政策). Updated July 2026.</p>
 
-  <h2>English</h2>
-  <p>灵镜 (Magic Mirror) knows you by birth moment, not by account.
+<div class="veil" aria-hidden="true"></div>
 
-Data stays on this device — unless you turn on cloud deep readings
+<!-- ===== Navigation ===== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F2BE45"/>
+        <circle cx="50" cy="32" r="3" fill="#F2ECDE"/>
+      </svg>
+      <span><span class="brand-zh">灵镜</span><span class="brand-en">Magic Mirror</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a class="btn btn-primary btn-nav" href="index.html#download">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Document head ===== -->
+<header class="doc-head">
+  <div class="container doc-head-grid">
+    <div class="reveal">
+      <span class="eyebrow">灵镜 · Legal</span>
+      <h1>Privacy Policy<span class="h1-zh">隐私政策</span></h1>
+      <p class="doc-meta">This page mirrors, verbatim, the legal text bundled inside the app (Settings → 隐私政策). Updated July 2026.</p>
+    </div>
+    <nav class="doc-jump reveal" style="--d: 120ms;" aria-label="Languages on this page">
+      <a class="jump-pill" href="#english"><span class="pi" aria-hidden="true">01</span>English</a>
+      <a class="jump-pill" href="#zh"><span class="pi" aria-hidden="true">02</span><span class="zh-label">中文</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== The document ===== -->
+<main class="container doc">
+
+  <article id="english" class="doc-section" lang="en">
+    <div class="doc-marker reveal">
+      <span class="doc-marker-index" aria-hidden="true">01</span>
+      <p class="doc-marker-label">English</p>
+    </div>
+    <p class="legal-body"><span class="opener">灵镜 (Magic Mirror) knows you by birth moment, not by account.</span>
+
+<span class="sect">Data stays on this device — unless you turn on cloud deep readings</span>
 Your birth data, saved profiles, castings and readings are stored only on this phone (Apple&#x27;s on-device SwiftData store). No accounts, no sign-up. Every divination engine runs locally — casting works in airplane mode. Free features never make a network request.
 
-How readings are made
+<span class="sect">How readings are made</span>
 By default, deep readings are generated on this device — by Apple Intelligence where supported, or a built-in deterministic template — and your birth data never leaves the phone. Members may additionally enable "cloud deep readings": only then, your chart facts and questions travel over an encrypted connection to the mirror&#x27;s own relay server and on to a large language model for reasoning. Answers are returned and discarded — the relay keeps no logs of your content and knows no account; it retains only a fourteen-day record of counts and latency, which contains no content and cannot be traced back to you. Switch it off and everything returns on-device; while it is off, the app sends nothing.
 
-About iCloud Backup
+<span class="sect">About iCloud Backup</span>
 If you enable iCloud Backup in iOS, this phone&#x27;s 灵镜 data is included in your own iCloud backup (encrypted and held by Apple). That is the iOS backup system, not the app uploading; you can exclude 灵镜 from backup in system Settings.
 
-No tracking
+<span class="sect">No tracking</span>
 No ads. No analytics, statistics or tracking SDKs. No device identifiers, no user profiling.
 
-Purchases
+<span class="sect">Purchases</span>
 Subscriptions and one-cast purchases are processed by Apple&#x27;s App Store. Apple handles payment, renewal and refunds; the app never sees your payment details and keeps no purchase records on any server.
 
-Notifications and widgets
+<span class="sect">Notifications and widgets</span>
 Reminders (such as the evening reflection) are locally scheduled notifications, off by default and switchable at any time. If you enable the lock-screen or home-screen widgets, display data reaches them only through the on-device app group — it still never leaves this phone.
 
-Your data, your call
+<span class="sect">Your data, your call</span>
 Because everything lives on this device, deleting the app deletes all of it. There is nothing to request from anyone. Cloud deep readings are discarded after each answer — no conversation content exists on the server to delete; the fourteen-day count-and-latency record contains no content and expires on its own.
 
-Changes
+<span class="sect">Changes</span>
 If data handling ever changes, this page changes with the version, and the change is named in the release notes.
 
-Contact
+<span class="sect">Contact</span>
 For questions, use the support channel listed on the App Store page.
 
-(Updated July 2026)</p>
+<span class="stamp">(Updated July 2026)</span></p>
+  </article>
 
-  <hr class="rule">
+  <article id="zh" class="doc-section" lang="zh-Hans">
+    <div class="doc-marker reveal">
+      <span class="doc-marker-index" aria-hidden="true">02</span>
+      <p class="doc-marker-label">中文</p>
+    </div>
+    <p class="legal-body zh"><span class="opener">灵镜是一面只认生辰、不认账号的镜。</span>
 
-  <h2 class="zh">中文</h2>
-  <p class="zh">灵镜是一面只认生辰、不认账号的镜。
-
-【数据只在此机——除非你亲手开启云上深读】
+<span class="sect"><span class="br">【</span>数据只在此机——除非你亲手开启云上深读<span class="br">】</span></span>
 生辰、性别、所存档案、每一次排盘与解读，只保存在这部手机上（Apple 的本地 SwiftData 存储）。灵镜不设账号，无需注册。排盘、六爻、梅花、黄历、紫微、奇门——所有推演引擎都在本机运行；飞行模式下，照样排盘。免费功能绝不联网。
 
-【解读如何生成】
+<span class="sect"><span class="br">【</span>解读如何生成<span class="br">】</span></span>
 深读默认由本机的 Apple 智能（如设备支持）或内置的确定性文字模板生成，生辰不出此机。结缘会员可另行开启「云上深读」：开启后，且仅在开启后，你的命盘要点与提问会经加密通道送往灵镜自己的中转服务器，转交大模型推理，答毕即弃——对话正文不落盘、不建账号；中转仅保留十四天的计数与延迟记录，不含任何内容，也无法反查到你。关闭开关，一切回到本机，随时可关。未开启时，应用不会发出任何请求。
 
-【关于 iCloud 备份】
+<span class="sect"><span class="br">【</span>关于 iCloud 备份<span class="br">】</span></span>
 若你在 iOS 系统中开启了 iCloud 备份，这部手机上的灵镜数据会随系统备份进入你自己的 iCloud（由 Apple 加密保管）。这是 iOS 的备份机制，不是灵镜在上传；不想备份，可在系统设置中将灵镜排除。
 
-【不追踪】
+<span class="sect"><span class="br">【</span>不追踪<span class="br">】</span></span>
 灵镜不含广告，不含任何统计、分析或追踪 SDK，不收集设备标识，不做用户画像。
 
-【购买】
+<span class="sect"><span class="br">【</span>购买<span class="br">】</span></span>
 结缘订阅与一事一占由 Apple 的 App Store 处理。付款、续期与退款均由 Apple 完成；灵镜看不到付款信息，也不在任何服务器上记录购买。
 
-【通知与小组件】
+<span class="sect"><span class="br">【</span>通知与小组件<span class="br">】</span></span>
 夜课等提醒均为本机排定的本地通知，默认关闭，开关随时可改。若开启锁屏或桌面小组件，签文等展示数据仅通过本机的应用组共享给小组件，同样不离开这部手机。
 
-【数据自主】
+<span class="sect"><span class="br">【</span>数据自主<span class="br">】</span></span>
 数据既然只在此机，删除应用即删除全部数据，无需向任何人申请。云上深读答毕即弃，服务器上没有对话正文可删；十四天的计数与延迟记录不含任何内容，到期即除。
 
-【变更】
+<span class="sect"><span class="br">【</span>变更<span class="br">】</span></span>
 若数据处理方式有任何变化，本页将随版本更新，并在更新说明中写明。
 
-【联系】
+<span class="sect"><span class="br">【</span>联系<span class="br">】</span></span>
 如有疑问，请通过 App Store 页面所列的支持渠道联系。
 
-（更新于 2026 年 7 月）</p>
-</div>
+<span class="stamp">（更新于 2026 年 7 月）</span></p>
+  </article>
+
+  <nav class="doc-next reveal" aria-label="More from 灵镜">
+    <a href="index.html">&larr; Back to 灵镜 / Magic Mirror</a>
+    <a href="terms.html">Terms of Use &rarr;</a>
+  </nav>
+
+</main>
+
+<!-- ===== Footer ===== -->
 <footer class="foot">
-  <a href="index.html">灵镜 / Magic Mirror</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+  <div class="container foot-inner">
+    <div>
+      <strong><span class="brand-zh">灵镜</span> / Magic Mirror</strong> &nbsp;·&nbsp;
+      <span>Built for iPhone. Made in Hong Kong.</span>
+    </div>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing">Source</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing/issues">Support</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+(function () {
+  document.documentElement.classList.add("js");
+  var els = document.querySelectorAll(".reveal");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
 </body>
 </html>

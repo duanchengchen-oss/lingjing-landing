@@ -5,109 +5,407 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#161823">
 <title>Terms of Use — 灵镜 / Magic Mirror</title>
+<meta name="description" content="The terms of use of 灵镜 / Magic Mirror — mirrored verbatim from the legal text bundled inside the app, in English and 中文.">
+<meta property="og:title" content="Terms of Use — 灵镜 / Magic Mirror">
+<meta property="og:description" content="The terms of use of 灵镜 / Magic Mirror — mirrored verbatim from the legal text bundled inside the app, in English and 中文.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="/og.png">
 <link rel="icon" type="image/png" href="/icon-180.png">
-<link rel="preload" href="fonts/LingJingSerif-Display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="preload" href="fonts/LingJingSerif-Legal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* ============================================================
+   灵镜 legal pages — the same lacquer chamber as the landing,
+   set for a document. Ground and metals from Theme/BrandColors:
+   漆黑 #161823 · 缟 #F2ECDE · 月白@.62 · 赤金 #F2BE45 · 乌金 #A78E44.
+   The legal body text is verbatim from LegalPages.swift — only the
+   chrome around it, and whole-line styling spans, live here.
+   ============================================================ */
+
 @font-face {
   font-family: "LingJingSerif";
-  src: url("fonts/LingJingSerif-Display.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
+  src: url("fonts/LingJingSerif-Legal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
+
 :root {
-  --bg: #161823; --surface: #222334; --ink: #F2ECDE;
-  --ink-dim: rgba(214, 236, 240, 0.62); --muted: rgba(214, 236, 240, 0.38);
-  --accent: #F2BE45; --gold-lo: #A78E44; --border: rgba(242, 236, 222, 0.08);
-  --maxw: 720px; --gutter: 24px;
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-display: "LingJingSerif", "Songti SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
-  --font-zh: "Songti SC", "Source Han Serif SC", "Noto Serif SC", "PingFang SC", serif;
+  --bg:        #161823;
+  --bg-deep:   #10121B;
+  --surface:   #222334;
+  --surface-2: #1B1C2B;
+  --ink:       #F2ECDE;
+  --ink-dim:   rgba(214, 236, 240, 0.62);
+  --ink-mute:  rgba(214, 236, 240, 0.55);
+  --ink-faint: rgba(214, 236, 240, 0.38);
+  --gold:      #F2BE45;
+  --gold-lo:   #A78E44;
+  --hairline:      rgba(242, 236, 222, 0.08);
+  --hairline-soft: rgba(242, 236, 222, 0.05);
+  --hairline-gold: rgba(167, 142, 68, 0.38);
+  --radius-pill: 999px;
+  --maxw: 1120px;
+  --gutter: 24px;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "LingJingSerif", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  --font-zh-body: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", "SimSun", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
+
 * { box-sizing: border-box; }
-html { color-scheme: dark; }
-body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-       font-family: var(--font-sans); font-size: 16px; line-height: 1.7;
-       -webkit-font-smoothing: antialiased;
-       background-image: radial-gradient(1100px 640px at 14% -12%, rgba(242, 190, 69, 0.045), transparent 62%);
-       background-repeat: no-repeat; }
-.container { max-width: var(--maxw); margin: 0 auto; padding: 56px var(--gutter) 72px; }
-h1 { font-family: var(--font-display); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; margin: 24px 0 10px; }
-h2 { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin: 48px 0 10px; color: var(--accent); }
-p { color: var(--ink-dim); white-space: pre-wrap; }
-.zh { font-family: var(--font-zh); }
-.meta { color: var(--muted); font-size: 14px; margin: 0 0 36px; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
+html { color-scheme: dark; scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; height: auto; }
+a { color: var(--gold); text-decoration: none; transition: color 0.3s var(--ease); }
+a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 ::selection { background: rgba(242, 190, 69, 0.28); color: var(--ink); }
-.rule { border: 0; border-top: 1px solid var(--border); margin: 56px 0; }
-.foot { border-top: 1px solid var(--border); padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom));
-        text-align: center; color: var(--muted); font-size: 13px; }
-.foot a { color: var(--ink-dim); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.zh { font-family: var(--font-zh-body); }
+
+/* --- The chamber: candlelight + gold dust, fixed behind everything --- */
+.veil {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(1200px 780px at 16% -12%, rgba(242, 190, 69, 0.05), transparent 62%),
+    radial-gradient(1000px 720px at 108% 16%, rgba(61, 59, 79, 0.45), transparent 64%),
+    radial-gradient(1400px 900px at 50% 118%, var(--bg-deep), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='840' height='840'%3E%3Cg fill='%23F2BE45'%3E%3Ccircle cx='71' cy='118' r='1.3' opacity='.32'/%3E%3Ccircle cx='233' cy='47' r='1' opacity='.18'/%3E%3Ccircle cx='412' cy='166' r='1.6' opacity='.26'/%3E%3Ccircle cx='598' cy='81' r='1' opacity='.2'/%3E%3Ccircle cx='754' cy='214' r='1.3' opacity='.3'/%3E%3Ccircle cx='137' cy='334' r='1' opacity='.16'/%3E%3Ccircle cx='519' cy='372' r='1.2' opacity='.22'/%3E%3Ccircle cx='688' cy='458' r='1' opacity='.15'/%3E%3Ccircle cx='86' cy='565' r='1.5' opacity='.27'/%3E%3Ccircle cx='313' cy='529' r='1' opacity='.17'/%3E%3Ccircle cx='452' cy='646' r='1.3' opacity='.24'/%3E%3Ccircle cx='641' cy='713' r='1' opacity='.19'/%3E%3Ccircle cx='196' cy='757' r='1.4' opacity='.28'/%3E%3Ccircle cx='779' cy='612' r='1' opacity='.14'/%3E%3Ccircle cx='546' cy='808' r='1.1' opacity='.2'/%3E%3Ccircle cx='352' cy='262' r='.9' opacity='.13'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- Navigation (index grammar) --- */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(22, 24, 35, 0.72);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.brand-mark { width: 25px; height: 25px; flex: none; }
+.brand-zh { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.06em; }
+.brand-en { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.02em; margin-left: 2px; }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a { color: var(--ink-dim); font-size: 14px; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.nav-links a[aria-current="page"] { color: var(--gold); }
+@media (max-width: 719px) {
+  .nav-links { gap: 0; }
+  .nav-links a:not(.btn) { display: none; }
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.5s var(--ease), background 0.5s var(--ease),
+              border-color 0.5s var(--ease), color 0.5s var(--ease),
+              box-shadow 0.5s var(--ease);
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--gold); color: #231803;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 14px 34px -14px rgba(242, 190, 69, 0.4);
+}
+.btn-primary:hover {
+  background: #F6CA5F; text-decoration: none; transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 18px 38px -14px rgba(242, 190, 69, 0.48);
+}
+.btn-nav { padding: 9px 18px; font-size: 13.5px; }
+
+/* --- Document head --- */
+.doc-head { padding: clamp(56px, 8.5vw, 104px) 0 clamp(36px, 5vw, 56px); }
+.doc-head-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; align-items: end; }
+@media (min-width: 900px) { .doc-head-grid { grid-template-columns: minmax(0, 1fr) auto; gap: 48px; } }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold-lo); font-weight: 600; font-family: var(--font-sans);
+}
+.eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold-lo); flex: none; }
+.doc-head .eyebrow { margin-bottom: 24px; }
+h1 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(38px, 5.4vw, 56px); line-height: 1.08;
+  letter-spacing: 0.005em; margin: 0;
+}
+.h1-zh {
+  display: block; font-family: var(--font-display); font-weight: 600;
+  color: var(--gold); font-size: clamp(16px, 2vw, 19px);
+  letter-spacing: 0.34em; margin-top: 16px;
+}
+.doc-meta { color: var(--ink-dim); font-size: 14px; line-height: 1.7; margin: 22px 0 0; max-width: 54ch; }
+
+/* --- Language jump pills --- */
+.doc-jump { display: flex; gap: 12px; flex-wrap: wrap; }
+.jump-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: var(--radius-pill);
+  border: 1px solid rgba(242, 236, 222, 0.18);
+  color: var(--ink-dim); font-size: 13.5px; font-weight: 600;
+  transition: border-color 0.5s var(--ease), color 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.jump-pill:hover { border-color: var(--hairline-gold); color: var(--gold); text-decoration: none; transform: translateY(-1px); }
+.jump-pill:active { transform: scale(0.98); }
+.jump-pill .pi { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--ink-mute); font-weight: 400; }
+.jump-pill .zh-label { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.1em; }
+
+/* --- The document: sticky language rail + measured column --- */
+.doc { padding-bottom: clamp(72px, 10vw, 128px); }
+.doc-section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; padding: clamp(44px, 6vw, 72px) 0; position: relative; }
+@media (min-width: 920px) { .doc-section { grid-template-columns: 168px minmax(0, 620px); } }
+.doc-section[id] { scroll-margin-top: 74px; }
+.doc .doc-section:first-of-type::before,
+.doc-section + .doc-section::before,
+.doc-next::before,
+footer.foot::before {
+  content: ""; position: absolute; top: 0; left: 50%;
+  width: min(var(--maxw), calc(100% - 2 * var(--gutter)));
+  transform: translateX(-50%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline) 18%, var(--hairline) 82%, transparent);
+}
+.doc .doc-section:first-of-type::before,
+.doc-section + .doc-section::before,
+.doc-next::before { width: 100%; }
+.doc-marker { align-self: start; }
+@media (min-width: 920px) { .doc-marker { position: sticky; top: 92px; } }
+.doc-marker::before { content: ""; display: block; width: 26px; height: 1px; background: var(--gold-lo); margin-bottom: 16px; }
+.doc-marker-index { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-mute); display: block; }
+.doc-marker-label { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.3; color: var(--ink); margin: 10px 0 0; letter-spacing: 0.04em; }
+
+/* --- The legal body: verbatim text, measured and lit --- */
+.legal-body {
+  white-space: pre-wrap; overflow-wrap: break-word;
+  font-size: 15.5px; line-height: 1.85;
+  color: var(--ink-dim); margin: 0;
+}
+.legal-body .sect {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 17px; line-height: 1.55;
+  color: var(--ink); letter-spacing: 0.01em;
+}
+.legal-body .sect .br { color: var(--gold-lo); }
+.legal-body .opener {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 18.5px; line-height: 1.65;
+  color: var(--ink); letter-spacing: 0.01em;
+}
+.legal-body .stamp { font-size: 13px; color: var(--ink-mute); letter-spacing: 0.08em; }
+.legal-body.zh {
+  font-family: var(--font-zh-body);
+  font-size: 16px; line-height: 2.05; letter-spacing: 0.014em;
+}
+.legal-body.zh .sect { font-size: 17.5px; letter-spacing: 0.06em; line-height: 1.6; }
+.legal-body.zh .opener { font-size: 19px; letter-spacing: 0.05em; line-height: 1.75; }
+
+/* --- Cross-links --- */
+.doc-next {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; flex-wrap: wrap;
+  margin-top: clamp(24px, 4vw, 40px); padding-top: 30px;
+  position: relative; font-size: 14.5px;
+}
+
+/* --- Footer (index grammar) --- */
+.foot { position: relative; padding: 40px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--ink-mute); font-size: 13px; }
+.foot-inner { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+@media (min-width: 720px) { .foot-inner { flex-direction: row; justify-content: space-between; align-items: center; } }
+.foot strong { color: var(--ink-dim); font-weight: 600; }
+.foot .brand-zh { font-size: 14px; }
+.foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.foot-links a { color: var(--ink-mute); }
+.foot-links a:hover { color: var(--ink); text-decoration: none; }
+
+/* --- Entry choreography (transform/opacity only; .js gate keeps
+       content visible when scripts are off) --- */
+.js .reveal { opacity: 0; transform: translateY(22px); }
+.reveal.in {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; }
+  .reveal.in { transition: none; }
+  .btn, .jump-pill { transition: none; }
+}
+
+/* --- Print: a legal document, on paper --- */
+@media print {
+  .veil, .nav, .doc-jump, .doc-next, .foot { display: none; }
+  body { background: #fff; color: #111; }
+  .legal-body, .legal-body.zh, .doc-meta { color: #333; }
+  .legal-body .sect, .legal-body .opener, .doc-marker-label, h1 { color: #000; }
+  .h1-zh, .eyebrow, .legal-body .sect .br, .doc-marker-index, .legal-body .stamp { color: #555; }
+  .doc-marker { position: static; }
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <a href="index.html" style="font-size: 14px;">&larr; back to 灵镜</a>
-  <h1>Terms of Use</h1>
-  <p class="meta">This page mirrors, verbatim, the legal text bundled inside the app (Settings → 用户协议). Updated July 2026.</p>
 
-  <h2>English</h2>
-  <p>What 灵镜 is
+<div class="veil" aria-hidden="true"></div>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M44 8 a24 28 0 1 0 0 48 a20 24 0 1 1 0 -48z" fill="#F2BE45"/>
+        <circle cx="50" cy="32" r="3" fill="#F2ECDE"/>
+      </svg>
+      <span><span class="brand-zh">灵镜</span><span class="brand-en">Magic Mirror</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html" aria-current="page">Terms</a>
+      <a class="btn btn-primary btn-nav" href="index.html#download">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Document head ===== -->
+<header class="doc-head">
+  <div class="container doc-head-grid">
+    <div class="reveal">
+      <span class="eyebrow">灵镜 · Legal</span>
+      <h1>Terms of Use<span class="h1-zh">用户协议</span></h1>
+      <p class="doc-meta">This page mirrors, verbatim, the legal text bundled inside the app (Settings → 用户协议). Updated July 2026.</p>
+    </div>
+    <nav class="doc-jump reveal" style="--d: 120ms;" aria-label="Languages on this page">
+      <a class="jump-pill" href="#english"><span class="pi" aria-hidden="true">01</span>English</a>
+      <a class="jump-pill" href="#zh"><span class="pi" aria-hidden="true">02</span><span class="zh-label">中文</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== The document ===== -->
+<main class="container doc">
+
+  <article id="english" class="doc-section" lang="en">
+    <div class="doc-marker reveal">
+      <span class="doc-marker-index" aria-hidden="true">01</span>
+      <p class="doc-marker-label">English</p>
+    </div>
+    <p class="legal-body"><span class="sect">What 灵镜 is</span>
 灵镜 (Magic Mirror) is an instrument of cultural exploration and reflection, built on classical divination systems (八字, 紫微, 六爻, 梅花, 奇门, tarot, astrology, 黄历 and more): it casts, reads and archives for you. By installing or using it you agree to these terms.
 
-What 灵镜 is not
+<span class="sect">What 灵镜 is not</span>
 It offers no medical, financial, legal or psychological advice, predicts no future and promises no outcome. The casting engines are deterministic implementations of classical methods; their output is a prompt for reflection, not a factual claim about the world or about you. For matters of health, money or law, consult a professional — decisions you make remain yours.
 
-Membership subscription
+<span class="sect">Membership subscription</span>
 Companion membership is an auto-renewable subscription (yearly or monthly). Pricing is shown in the App Store and varies by region and currency; payment is charged to your Apple Account on confirmation. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period. Cancel or manage it in Settings → Apple Account → Subscriptions. Any free trial on the yearly plan (shown honestly on the purchase page when you are eligible) ends when the subscription begins.
 
-One question, one cast
+<span class="sect">One question, one cast</span>
 A one-cast purchase is a consumable: one purchase, one deep cast. Credits are used inside the app and do not expire.
 
-Restoring purchases
+<span class="sect">Restoring purchases</span>
 After a new device or a reinstall, tap &quot;Restore purchases&quot; on the membership page or in Settings to recover your subscription. Refunds are handled by Apple (reportaproblem.apple.com).
 
-Your input
+<span class="sect">Your input</span>
 You are responsible for the accuracy of the birth data you enter; a wrong input yields a wrong chart.
 
-Intellectual property
+<span class="sect">Intellectual property</span>
 The app&#x27;s interface, writing and engine implementations belong to the developer. The classical systems themselves are public cultural heritage and are not claimed as original work; the tarot module follows the Rider–Waite–Smith lineage, the astrology module the tropical zodiac.
 
-No warranty, governing law
+<span class="sect">No warranty, governing law</span>
 灵镜 is provided &quot;as is&quot;, without warranty of any kind. To the maximum extent permitted by law, the developer is not liable for indirect damages arising from its use. These terms are governed by the laws of the Hong Kong SAR.
 
-(Updated July 2026)</p>
+<span class="stamp">(Updated July 2026)</span></p>
+  </article>
 
-  <hr class="rule">
-
-  <h2 class="zh">中文</h2>
-  <p class="zh">【灵镜是什么】
+  <article id="zh" class="doc-section" lang="zh-Hans">
+    <div class="doc-marker reveal">
+      <span class="doc-marker-index" aria-hidden="true">02</span>
+      <p class="doc-marker-label">中文</p>
+    </div>
+    <p class="legal-body zh"><span class="sect"><span class="br">【</span>灵镜是什么<span class="br">】</span></span>
 灵镜是一件文化与自省的器物：以传统命理与占卜体系（八字、紫微、六爻、梅花、奇门、塔罗、星座、黄历等）为底，为你起盘、解读、留档。安装或使用灵镜，即表示同意本协议。
 
-【灵镜不是什么】
+<span class="sect"><span class="br">【</span>灵镜不是什么<span class="br">】</span></span>
 灵镜不提供医疗、财务、法律或心理咨询建议，不预测未来，不承诺任何结果。排盘引擎是古法的确定性实现，其输出是供自省的参考，不是对世界或对你的事实断言。凡涉及健康、钱财、法律等要紧事，请咨询相应的专业人士；据此做出的决定，责任在你。
 
-【结缘订阅】
+<span class="sect"><span class="br">【</span>结缘订阅<span class="br">】</span></span>
 结缘会员为自动续期订阅（按年或按月）。价格以 App Store 内的标价为准，随地区与币种而异，购买确认后经 Apple 账户扣款。除非在当前周期结束至少 24 小时前取消，订阅将自动续期。取消与管理：设置 → Apple 账户 → 订阅。年度订阅的免费试用（如你符合条件，购买页会如实标明）在订阅生效时随之结束。
 
-【一事一占】
+<span class="sect"><span class="br">【</span>一事一占<span class="br">】</span></span>
 一事一占为一次性消耗品：一次购买，一次深占，额度在应用内使用，不随时间过期。
 
-【恢复购买】
+<span class="sect"><span class="br">【</span>恢复购买<span class="br">】</span></span>
 更换设备或重装后，在「结缘」页或「设置」中点「恢复购买」即可找回订阅。退款由 Apple 处理（reportaproblem.apple.com）。
 
-【你的输入】
+<span class="sect"><span class="br">【</span>你的输入<span class="br">】</span></span>
 所填生辰等信息的准确性由你负责；输入有误，盘亦随之而误。
 
-【知识产权】
+<span class="sect"><span class="br">【</span>知识产权<span class="br">】</span></span>
 应用的界面、文字与引擎实现归开发者所有。八字、紫微、易经等传统体系属公共文化遗产，不作原创主张；塔罗采用韦特体系，星座采用回归黄道体系。
 
-【免责与适用法律】
+<span class="sect"><span class="br">【</span>免责与适用法律<span class="br">】</span></span>
 灵镜按「现状」提供，不作任何明示或默示担保；在法律允许的最大范围内，开发者不对使用本应用产生的间接损失负责。本协议适用香港特别行政区法律。
 
-（更新于 2026 年 7 月）</p>
-</div>
+<span class="stamp">（更新于 2026 年 7 月）</span></p>
+  </article>
+
+  <nav class="doc-next reveal" aria-label="More from 灵镜">
+    <a href="index.html">&larr; Back to 灵镜 / Magic Mirror</a>
+    <a href="privacy.html">Privacy Policy &rarr;</a>
+  </nav>
+
+</main>
+
+<!-- ===== Footer ===== -->
 <footer class="foot">
-  <a href="index.html">灵镜 / Magic Mirror</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+  <div class="container foot-inner">
+    <div>
+      <strong><span class="brand-zh">灵镜</span> / Magic Mirror</strong> &nbsp;·&nbsp;
+      <span>Built for iPhone. Made in Hong Kong.</span>
+    </div>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing">Source</a>
+      <a href="https://github.com/duanchengchen-oss/lingjing-landing/issues">Support</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+(function () {
+  document.documentElement.classList.add("js");
+  var els = document.querySelectorAll(".reveal");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
 </body>
 </html>
